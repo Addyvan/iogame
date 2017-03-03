@@ -1,0 +1,31 @@
+
+/* http://stackoverflow.com/questions/114543/horizontally-center-a-div-in-a-div */
+.outer-center {
+  text-align: center;
+}
+.outer-center *  {
+  display: inline-block;
+}
+
+#menu {
+    padding-top: 5%;
+}
+#menu-body {
+    height:80%;
+}
+
+#menu-body div{
+    height:100%;
+}
+
+/*
+#menu div{
+    outline: #00FF00 dotted thick;
+}
+*/
+
+canvas{
+    position: absolute;
+    top:0;
+    left:0;
+}

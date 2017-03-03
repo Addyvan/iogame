@@ -1,0 +1,13 @@
+html
+    head
+        title= "io game canvas"
+        link(rel="stylesheet" ,href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+        link(rel='stylesheet', href='/css/custom.css')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js")
+        script(src='/socket.io/socket.io.js')
+        script(src='/js/core.js') //- since some scripts rely on the class definition it has to be loaded before the rest
+        script(src='/js/loader.js')
+    body
+        #game-area-wrapper
+            canvas#bg
+            canvas#fg(style="z-index:2;")

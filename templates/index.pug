@@ -1,0 +1,30 @@
+html
+    head
+        title= "io game prototype"
+        link(rel="stylesheet" ,href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+        link(rel='stylesheet', href='/css/custom.css')
+        script(src='/socket.io/socket.io.js')
+        script(src='/socket_test.js')
+    body
+        #menu(class="container-fluid")
+            #menu-title(class="row")
+                .col-sm-3
+                .col-sm-6(class="outer-center")
+                    h1
+                        | TITLE
+                .col-sm-3
+            #menu-body(class="row")
+                .col-sm-1 
+                .col-sm-3(class="outer-center")
+                    p
+                        |ADVERT
+                .col-sm-4(class="outer-center")
+                    button(type="button", class="btn btn-success", id="play-button")
+                        | Play Game
+                .col-sm-3(class="outer-center")
+                    p 
+                        |USER INFO
+                .col-sm-1
+            #menu-footer(class="row")
+                .span-6(class="outer-center") 
+                    | links and stuff
