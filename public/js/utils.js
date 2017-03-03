@@ -4,6 +4,7 @@ Client side utils
 */
 
 function xhrGet(reqUri, callback,type ){
+    // small wrapper to facilitate XMLHttpRequests
     var caller= xhrGet.caller;
     var xhr= new XMLHttpRequest();
     xhr.open("GET",reqUri,true);

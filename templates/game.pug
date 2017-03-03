@@ -1,3 +1,4 @@
+//- This file is a barebones page meant to test the game without having to load the menu first
 html
     head
         title= "io game canvas"
@@ -5,7 +6,9 @@ html
         link(rel='stylesheet', href='/css/custom.css')
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js")
         script(src='/socket.io/socket.io.js')
-        script(src='/js/core.js') //- since some scripts rely on the class definition it has to be loaded before the rest
+
+        //- since some scripts rely on the class definition it has to be loaded before the rest
+        script(src='/js/core.js') 
         script(src='/js/loader.js')
     body
         #game-area-wrapper

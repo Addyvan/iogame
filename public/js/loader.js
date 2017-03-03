@@ -13,7 +13,10 @@ window.onload = function() {
                 "js/globals.js",
                 "js/setup.js",
                 "js/utils.js",
-                "js/3dsprite.js"
+                "js/3dsprite.js",
+                "js/inputHandler.js",
+                "js/simple_protocols/setBrowser.js",
+                "js/simple_protocols/getBrowser.js"
                  ];
     for(i=0 ; i< scripts.length;i++){
         // todo add error handling

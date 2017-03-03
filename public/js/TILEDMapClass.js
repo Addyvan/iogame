@@ -1,3 +1,9 @@
+/*
+    This file was from a udacity HTML5 game dev course( it kind of sucked so I don't recommend it)
+
+*/
+
+
 //guh margins are a pain
 MARGINS=1;
 

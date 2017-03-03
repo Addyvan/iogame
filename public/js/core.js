@@ -1,3 +1,7 @@
+/*
+    From udacity html5 game course, used to build a pseudo class object in JS
+*/
+
 //
 // Helper file with various definitions for our Class object.
 // You don't have to modify anything in here.
