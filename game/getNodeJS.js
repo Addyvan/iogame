@@ -1,6 +1,6 @@
 module.exports = {
     get:function(buf) {
-            function Reader(buf) {
+        function Reader(buf) {
             this.index = 0;
             this.buffer = buf;
         }
@@ -48,11 +48,17 @@ module.exports = {
         var reader = new Reader(buf);
         var data1;
 
-        var len1 = reader.readUInt8();
-        var data1 = [];
-        for (var i1 = 0; i1 < len1; i1++) {
-            data1.push(reader.readUInt8());
+        var data1 = {};
+        data1.time = reader.readUInt16BE() - 524;
+        var len2 = reader.readUInt8();
+        var data2 = [];
+        for (var i2 = 0; i2 < len2; i2++) {
+            var data3 = {};
+            data3.name = reader.readString8();
+            data3.age = reader.readUInt8() - 5;
+            data2.push(data3);
         }
+        data1.test = data2;
         return data1;
-    }
+        }
 }
