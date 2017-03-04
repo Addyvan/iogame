@@ -81,19 +81,8 @@ InputHandlerClass = Class.extend({
         for(var i=0; i<INPUT_ORDER.length;i++){
             input_list.push(inputHandler.actions[INPUT_ORDER[i]]);
         }
-        //console.log(input_list);
-        //binary_input_list=set(input_list);
-        input_list= {time: 30001,
-                    test:[
-                            { name:"john",
-                                age:13
-                            },
-                            {age:16,
-                                name:"jim"}
-                            ]
-                        };
+        binary_input_list=set(input_list);
         console.log(input_list);
-        binary_input_list=set(input_list);                
         console.log(binary_input_list);
         socket.emit('a',binary_input_list);
     }   

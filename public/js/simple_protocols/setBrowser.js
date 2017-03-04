@@ -39,23 +39,14 @@ function set(data1) {
 
     var byteLen = 0;
 
-    var data2 = data1.test;
-    ++byteLen
-    for (var i2 = 0; i2 < data2.length; i2++) {
-        var data3 = data2[i2];
-        byteLen += 1 + data3.name.length * 1;
+    for (var i1 = 0; i1 < 4; i1++) {
+        var data2 = data1[i1];
         byteLen += 1;
     }
-    byteLen += 2;
     var writer = new Writer(byteLen);
-    writer.writeUInt16BE(data1.time + 524);
-    var data2 = data1.test;
-    var len2 = data2.length
-    writer.writeUInt8(len2)
-    for (var i2 = 0; i2 < len2; i2++) {
-        var data3 = data2[i2];
-        writer.writeString8(data3.name);
-        writer.writeUInt8(data3.age + 5);
+    for (var i1 = 0; i1 < 4; i1++) {
+        var data2 = data1[i1];
+        writer.writeUInt8(data2);
     }
     return writer.toBuffer();
 }

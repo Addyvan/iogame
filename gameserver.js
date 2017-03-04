@@ -32,13 +32,14 @@ io.on('connection', function(socket){
     //add the client to the dict of sockets
     sockets[socket.id]=socket;
 
-    game_loop.add_player(socket.id,socket.handshake.query);
+    socket.player=game_loop.add_player(socket.id,socket.handshake.query);
 
     socket.on('a',function(moves_binary){
         // receive key inputs from the player
-        console.log(moves_binary);
+        //console.log(moves_binary);
         moves= sp_get.get(moves_binary);
-        console.log(moves);
+        //console.log(moves);
+        socket.player.parse(moves);
     });
     socket.on('disconnect', function(reason){
         game_loop.remove_player(socket.id,socket.handshake.query);
@@ -55,11 +56,11 @@ io.on('connection', function(socket){
 io.listen(c["port"]);
 console.log("listening on port "+ c["port"]);
 
-//begin the game loop
+//load in some classes
 Player=require(__dirname +'/game/player_class.js')
+Gmap= require(__dirname +'/game/map_class.js')
 
+//begin the game loop
 Game_loop=require(__dirname +'/game/game_server_loop.js');
 var game_loop = new Game_loop();
-console.log(game_loop.tick);
-game_loop.step();
 game_loop.start();

@@ -13,7 +13,8 @@ function Game_loop(){
 
     this.players=[];
     this.world={};
-    this.map=undefined;
+    this.map=new Gmap();
+    this.map.load("map.json"); //TODO put this into a new round function
 }
 
 
@@ -47,7 +48,10 @@ Game_loop.prototype.start = function(){
 Game_loop.prototype.add_player = function(id, query){
     // add a player to the list of players
     console.log(`${query.username } is joining the game`);
-    this.players.push(new Player({id:id,username:query.username }));
+    //CRITICAL TODO, findout whether or not this is passing a pointer or some crazy recursive copy
+    new_player=new Player({id:id,username:query.username, game:this });
+    this.players.push(new_player);
+    return new_player;
 };
 
 Game_loop.prototype.remove_player = function(id){
