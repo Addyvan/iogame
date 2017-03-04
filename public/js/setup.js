@@ -46,8 +46,11 @@ function start_game(){
 
 connect_to_socket= function(type="player"){
     window.socket = io.connect('http://localhost:'+GAME_PORT,{query:"type=" + type});
-    socket.on('message', function (data) {
-       console.log("connected!"+data.message);
+    socket.on('playerID', function (data) {
+       PLAYER_ID=data.id;
     });
+
+    //on snapshot
+    socket.on('s',parse_snapshot);
 };
 

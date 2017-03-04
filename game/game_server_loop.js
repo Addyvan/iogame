@@ -15,6 +15,12 @@ function Game_loop(){
     this.world={};
     this.map=new Gmap();
     this.map.load("map.json"); //TODO put this into a new round function
+    this.snapshot={tick:this.tick,
+                    timestamp:this.timestamp,
+                    id:"todo",
+                    players:[]
+                };
+
 }
 
 
@@ -29,11 +35,12 @@ Game_loop.prototype.step = function(){
 
     //increment the game tick and set the timestamp
     this.tick= (this.tick+1)%100000;
-    this.timestamp = undefined; // TODO
-
+    // 86400000 is # milliseconds in a day, apparently the timestamp was too big to fit in 4 bytes and that caused issues
+    this.timestamp = Date.now()%86400000; // TODO figure out if this is the best method, also apparently node has higher res timing?
+    this.prep_snapshot(); //atm only updates time/tick keeping in this function
     if(this.tick%100===1) console.log(`GAME TICK: ${this.tick }`);
 
-
+    //console.log(this.snapshot);
 };
 
 Game_loop.prototype.start = function(){
@@ -51,16 +58,39 @@ Game_loop.prototype.add_player = function(id, query){
     //CRITICAL TODO, findout whether or not this is passing a pointer or some crazy recursive copy
     new_player=new Player({id:id,username:query.username, game:this });
     this.players.push(new_player);
+    this.snapshot.players.push(new_player.snapshot_data);
     return new_player;
 };
 
 Game_loop.prototype.remove_player = function(id){
     // remove a player from the list of players
+    
+    //remember to remove the player from the snapshot as well!
+    // think this has to be first or we may end up with undefined troubles
+    //http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
+
+
+    for (var i = 0, len = this.snapshot.players.length; i < len; i++) {
+        if(this.snapshot.players[i].id==id){
+            this.snapshot.players.splice(i,1);
+            break;
+        }
+    }
+
     for (var i = 0, len = this.players.length; i < len; i++) {
         if(this.players[i].id==id){
             this.players.splice(i,1);
             break;
         }
     }
+
 };
+Game_loop.prototype.prep_snapshot = function(){
+    // update the snapshot
+    this.snapshot.tick=this.tick;
+    this.snapshot.timestamp=this.timestamp;
+
+};
+
+
 module.exports= Game_loop;

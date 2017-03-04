@@ -47,10 +47,21 @@ function get(buf) {
     var reader = new Reader(buf);
     var data1;
 
-    var len1 = reader.readUInt8();
-    var data1 = [];
-    for (var i1 = 0; i1 < len1; i1++) {
-        data1.push(reader.readUInt8() - 123);
+    var data1 = {};
+    data1.timestamp = reader.readUInt32BE() - 1319538818;
+    data1.id = reader.readString8();
+    var len2 = reader.readUInt8();
+    var data2 = [];
+    for (var i2 = 0; i2 < len2; i2++) {
+        var data3 = {};
+        data3.username = reader.readString8();
+        data3.y = reader.readUInt16BE() - 43824;
+        data3.id = reader.readString8();
+        data3.x = reader.readUInt16BE() - 28829;
+        data3.angle = reader.readUInt16BE() - 54670;
+        data2.push(data3);
     }
+    data1.players = data2;
+    data1.tick = reader.readUInt32BE() - 1321263712;
     return data1;
 }

@@ -32,6 +32,10 @@ io.on('connection', function(socket){
     //add the client to the dict of sockets
     sockets[socket.id]=socket;
 
+    // add the client to the game room 
+    // no real reason for this now but might be good for later optimization to have it in
+    socket.join('game');
+
     socket.player=game_loop.add_player(socket.id,socket.handshake.query);
 
     socket.on('a',function(moves_binary){
@@ -44,10 +48,19 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(reason){
         game_loop.remove_player(socket.id,socket.handshake.query);
     });
-    io.emit('message',{message: 'socket connected!'});
+    io.emit('playerID',{id: socket.id});
 });
 
+broadcast = function(){
+    // broadcast a snapshot to all clients
+    // TODO improve general efficiency
+    if (game_loop.snapshot===undefined) return;
+    binary_snapshot = sp_set.set(game_loop.snapshot);
+    //console.log(game_loop.snapshot);
+    //console.log(binary_snapshot);
 
+    io.in('game').emit('s', binary_snapshot);
+};
 
 
 
@@ -64,3 +77,7 @@ Gmap= require(__dirname +'/game/map_class.js')
 Game_loop=require(__dirname +'/game/game_server_loop.js');
 var game_loop = new Game_loop();
 game_loop.start();
+
+
+// begin broadcasting
+setInterval(broadcast,1000/20);

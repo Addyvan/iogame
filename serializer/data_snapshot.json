@@ -1,0 +1,14 @@
+{
+    timestamp: "int 0 86400000",
+    tick: "int 0 1000000",
+    id: "string",
+    players: [
+            {
+             username:"string",
+             id: "string",
+             x: "int 0 10000",
+             y: "int 0 10000",
+             angle: "int 0 10000"
+            }
+        ]
+}

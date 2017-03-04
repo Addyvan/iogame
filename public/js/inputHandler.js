@@ -88,4 +88,3 @@ InputHandlerClass = Class.extend({
     }   
 
 });
-window.inputHandler= new InputHandlerClass();

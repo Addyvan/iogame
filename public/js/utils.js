@@ -23,3 +23,11 @@ function xhrGet(reqUri, callback,type ){
 
     xhr.send();
 }
+
+
+function game_coords_to_screen(x,y,scale=1){
+    // convert game coordinates to an on screen coordinate
+    screen_x= (x/100 - PLAYER_CAMERA.x)*RESOLUTION*scale ;
+    screen_y= ( y/100 - PLAYER_CAMERA.y)*RESOLUTION*scale ;
+    return [screen_x,screen_y];
+}

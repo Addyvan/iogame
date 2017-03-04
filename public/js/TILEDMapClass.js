@@ -246,8 +246,8 @@ var TILEDMapClass = Class.extend({
         //
         // YOUR CODE HERE
 
-        offset_x= -window.PLAYER_CAMERA.x;
-        offset_y= -window.PLAYER_CAMERA.y;
+        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION;
+        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION;
 
         for (var layerIdx = 0; layerIdx < this.currMapData.layers.length;layerIdx++){
             if (this.currMapData.layers[layerIdx].type != "tilelayer" ) continue;

@@ -25,13 +25,15 @@ function Player(args){
     //state
     this.dead=1;
     this.hp=0;
-    this.x=0;
-    this.y=0;
+    this.x=33.5;
+    this.y=9.5;
+    this.tile_x=9;
+    this.tile_y=10.5;
 
-    this.speed=1;
-    this.heading=0; 
+    this.speed=2/60; //TEMPORARY TODO
+    this.heading=1; 
     this.new_heading=0; 
-    this.direction=[1,0]; // also the angle of the train?
+    this.direction=[0,1]; // also the angle of the train?
     this.midturn=0; // -1 ,0 , or 1 for left , not turning , or right 
     this.progress=0; // used to track progress through a tile
 
@@ -47,7 +49,12 @@ function Player(args){
 
 
     //snapshot data is used so that we only have to send some of the data
-    this.snapshot_data={};
+    this.snapshot_data={id:this.id,
+                        username:this.username,
+                        x:0,
+                        y:0,
+                        angle:0
+                    };
 
 }
 
@@ -56,6 +63,8 @@ function Player(args){
 Player.prototype.tick = function(){
     // this function is called every tick for each player to update their game state
 
+    this.update_position();
+    this.prep_snapshot();
 };
 
 Player.prototype.update_position = function(){
@@ -70,6 +79,13 @@ Player.prototype.spawn = function(){
 
 
     this.dead =0;
+
+};
+Player.prototype.prep_snapshot = function(){
+    // set the snapshot data fields
+    this.snapshot_data.x= Math.round(this.x*100);
+    this.snapshot_data.y= Math.round(this.y*100);
+    this.snapshot_data.angle= Math.round(this.angle); //TODO
 
 };
 
