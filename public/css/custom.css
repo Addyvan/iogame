@@ -24,8 +24,11 @@
 }
 */
 
+
 canvas{
     position: absolute;
     top:0;
     left:0;
+    /*https://developer.mozilla.org/en/docs/Web/CSS/image-rendering */
+   image-rendering: pixelated;
 }
