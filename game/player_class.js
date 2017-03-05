@@ -30,7 +30,7 @@ function Player(args){
     this.tile_x=9;
     this.tile_y=10.5;
 
-    this.speed=2/60; //TEMPORARY TODO
+    this.speed=0; 
     this.heading=1; 
     this.new_heading=0; 
     this.direction=[0,1]; // also the angle of the train?
@@ -44,8 +44,8 @@ function Player(args){
     //stats
     //TODO move to config file
     this.max_health=100;
-    this.accel_rate=0.01;
-    this.max_speed=3;
+    this.accel_rate=0.05/60;
+    this.max_speed=7/60; // you can fly off the tracks if this is too high
 
 
     //snapshot data is used so that we only have to send some of the data
@@ -69,6 +69,9 @@ Player.prototype.tick = function(){
 
 Player.prototype.update_position = function(){
     // apply acceleration and update position
+    this.speed+= this.accel_rate*this.accelerating;
+    if (this.speed >this.max_speed) this.speed= this.max_speed;
+    if (this.speed< -0.2*this.max_speed) this.speed = -0.2*this.max_speed; //TODO figure out how reversing should behave
 
     this.game.map.move(this);
 };

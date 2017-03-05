@@ -3,6 +3,9 @@
 
 */
 
+//anchor around where the bg is, when we leave it we re render, otherwise we just slide stuff around
+ANCHOR=undefined;
+
 
 //guh margins are a pain
 MARGINS=1;
@@ -67,6 +70,11 @@ var TILEDMapClass = Class.extend({
     // we've done in the past using
     // XMLHttpRequests.
     load: function (map) {
+
+        //this should proably not be shoved in here but unclear where else to put it
+        window.RENDER_CANVAS=document.createElement('canvas');
+        RENDER_CANVAS.height= VIEWPORT_HEIGHT+2*RESOLUTION ;
+        RENDER_CANVAS.width= VIEWPORT_WIDTH+2*RESOLUTION ;
 
         // Perform an XMLHttpRequest to grab the
         // JSON file at url 'map'.
@@ -216,10 +224,31 @@ var TILEDMapClass = Class.extend({
         return pkt;
     },
 
+    draw: function(ctx){
+        // only draw if the map needs new tiles rendered, otherwise just translate the map!
+        //hopefully much more efficient
+        if(ANCHOR===undefined || Math.abs(ANCHOR[0] - PLAYER_CAMERA.x )>1 ||  Math.abs(ANCHOR[1] - PLAYER_CAMERA.y )>1) {
+            gMap.draw_from_scratch(ctx);
+        }
+        else{
+            gMap.lazy_draw(ctx);
+        }
+    },
+
+    lazy_draw: function(ctx){
+        // just center the map
+        ctx.save();
+        ctx.translate((ANCHOR[0]-PLAYER_CAMERA.x)*RESOLUTION,(ANCHOR[1]-PLAYER_CAMERA.y)*RESOLUTION);
+        ctx.drawImage(RENDER_CANVAS, -RESOLUTION, -RESOLUTION);
+        ctx.restore();
+        
+
+    },
+
      //-----------------------------------------
     // Draws all of the map data to the passed-in
     // canvas context, 'ctx'.
-    draw: function (ctx) {
+    draw_from_scratch: function (ctx) {
         // First, we need to check if the map data has
         // already finished loading.
         if(!gMap.fullyLoaded) return;
@@ -246,8 +275,11 @@ var TILEDMapClass = Class.extend({
         //
         // YOUR CODE HERE
 
-        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION;
-        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION;
+
+        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION + RESOLUTION;
+        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION + RESOLUTION;
+
+        render_ctx= RENDER_CANVAS.getContext("2d");
 
         for (var layerIdx = 0; layerIdx < this.currMapData.layers.length;layerIdx++){
             if (this.currMapData.layers[layerIdx].type != "tilelayer" ) continue;
@@ -264,16 +296,17 @@ var TILEDMapClass = Class.extend({
                 var worldX = offset_x+ Math.floor(tileIdx % this.numXTiles)* this.tileSize.x;
                 var worldY = offset_y+ Math.floor(tileIdx / this.numXTiles)* this.tileSize.y;
 
-                // the 32 is this.tileSize.x*2, not sure if it's worth the speed to hard code it?
-                if ( ( worldX< -32 )|| (worldY< -32) || (worldX> bgCanvas.width+32) || (worldY> bgCanvas.height+32 ) ) continue; // skip that tile if it's off screen
+                if ( ( worldX< -RESOLUTION*2 )|| (worldY< -RESOLUTION*2) || (worldX> bgCanvas.width+RESOLUTION*2) || (worldY> bgCanvas.height+RESOLUTION*2 ) ) continue; // skip that tile if it's off screen
 
-                ctx.drawImage(tPKT.img, tPKT.px , tPKT.py,
+                render_ctx.drawImage(tPKT.img, tPKT.px , tPKT.py,
                             this.tileSize.x, this.tileSize.y,
                             worldX,worldY,
                             this.tileSize.x,this.tileSize.y);
             }
         }
-        
+
+        ANCHOR=[PLAYER_CAMERA.x,PLAYER_CAMERA.y];   
+        gMap.lazy_draw(ctx);     
     }
 
 });

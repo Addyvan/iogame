@@ -191,7 +191,7 @@ interpolate= function(time,interpolated_snap){
 
 };
 
-
+/*
 window.onkeypress =game_onkeypress = function(e){
     // this is a temporary function meant to test the graphics without any game logic
     speed=0.25;
@@ -217,7 +217,7 @@ window.onkeypress =game_onkeypress = function(e){
     }
     
 };
-
+*/
 
 setCameraPosition = function(snapshot){
     //set the player's camera to center on their train
@@ -232,5 +232,5 @@ setCameraPosition = function(snapshot){
 
     PLAYER_CAMERA.x=Math.min( Math.max(MAP_WIDTH-PLAYER_CAMERA.w,0)  ,Math.max(player.x/100 - PLAYER_CAMERA.w/2 ,0 ) );
     PLAYER_CAMERA.y=Math.min( Math.max(MAP_HEIGHT-PLAYER_CAMERA.h,0)  ,Math.max(player.y/100 - PLAYER_CAMERA.h/2 ,0 ) );
-    console.log(PLAYER_CAMERA.x,PLAYER_CAMERA.y);
+    //console.log(PLAYER_CAMERA.x,PLAYER_CAMERA.y);
 };

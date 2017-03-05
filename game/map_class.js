@@ -123,7 +123,13 @@ Gmap.prototype.move = function(player){
     tile_x=Math.floor(player.x);
     tile_y=Math.floor(player.y);
 
-
+    heading=player.heading;
+    turning = player.turning;
+    speed= Math.abs(player.speed);
+    if (player.speed < 0 ){
+        heading= (heading+2)%4
+        turning=1; //cant turn in reverse
+    }
 
 
     var player_tile = this.data[tile_y*this.width +tile_x%this.width]; 
@@ -140,15 +146,15 @@ Gmap.prototype.move = function(player){
         //console.log(player.heading,player.turning);
         //console.log(valid_moves);
 
-        if(player.turning!=1 && valid_moves[player.heading][player.turning]){
+        if(turning!=1 && valid_moves[heading][turning]){
             //the player wants to turn and can
-            player.midturn=player.turning -1;
+            player.midturn=turning -1;
             player.progress=0; //TODO this should be set to their actual progress
             console.log("turn initiated by press!");
         }
-        if(!valid_moves[player.heading][1]){
+        if(!valid_moves[heading][1]){
             //the player wants to go straight and can't
-            player.midturn= valid_moves[player.heading].indexOf(1)-1;
+            player.midturn= valid_moves[heading].indexOf(1)-1;
             player.progress=0;
             console.log("turn initiated by necessity!");
         }
@@ -158,20 +164,20 @@ Gmap.prototype.move = function(player){
         //go straight
         //console.log("straight!");
         player.angle=heading_to_angle[player.heading];
-        player.direction= headings_to_vector[player.heading];
-        player.x+=player.direction[0]*player.speed;
-        player.y+=player.direction[1]*player.speed;
+        player.direction= headings_to_vector[heading];
+        player.x+=player.direction[0]*speed;
+        player.y+=player.direction[1]*speed;
     }
     else{
         //turn
         //console.log("turning!");
         // a turn is only 80% the length as going straight
-        player.progress+=player.speed;
-        player.x= tile_x +start_point[player.heading][0] + player.progress/0.75 *0.5*(headings_to_vector[player.heading][0] + headings_to_vector[(player.heading + player.midturn +4)%4][0] );// the +4 is bc js modulo sucks
-        player.y= tile_y +start_point[player.heading][1] + player.progress/0.75 *0.5*(headings_to_vector[player.heading][1] + headings_to_vector[(player.heading + player.midturn+4)%4][1] );
+        player.progress+=speed;
+        player.x= tile_x +start_point[heading][0] + player.progress/0.75 *0.5*(headings_to_vector[heading][0] + headings_to_vector[(heading + player.midturn +4)%4][0] );// the +4 is bc js modulo sucks
+        player.y= tile_y +start_point[heading][1] + player.progress/0.75 *0.5*(headings_to_vector[heading][1] + headings_to_vector[(heading + player.midturn+4)%4][1] );
         /*
-        player.x= tile_x +start_point[player.heading][0] + 0.5*Math.sin((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (player.heading-1)*Math.PI*0.5);
-        player.y= tile_y +start_point[player.heading][1]+ 0.5*Math.cos((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (player.heading-1)*Math.PI*0.5);
+        player.x= tile_x +start_point[heading][0] + 0.5*Math.sin((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (heading-1)*Math.PI*0.5);
+        player.y= tile_y +start_point[heading][1]+ 0.5*Math.cos((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (heading-1)*Math.PI*0.5);
         */
         player.angle= (heading_to_angle[player.heading] + player.midturn*90*player.progress/0.8)%360;
         if (player.progress>0.8){

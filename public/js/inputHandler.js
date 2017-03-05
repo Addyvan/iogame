@@ -82,8 +82,8 @@ InputHandlerClass = Class.extend({
             input_list.push(inputHandler.actions[INPUT_ORDER[i]]);
         }
         binary_input_list=set(input_list);
-        console.log(input_list);
-        console.log(binary_input_list);
+        //console.log(input_list);
+        //console.log(binary_input_list);
         socket.emit('a',binary_input_list);
     }   
 
