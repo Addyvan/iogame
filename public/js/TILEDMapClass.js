@@ -5,7 +5,7 @@
 
 //anchor around where the bg is, when we leave it we re render, otherwise we just slide stuff around
 ANCHOR=undefined;
-PADDING=2; // # of tiles of padding that are rendered in each direction
+PADDING=4; // # of tiles of padding that are rendered in each direction
 
 //guh margins are a pain
 MARGINS=1;
@@ -227,7 +227,7 @@ var TILEDMapClass = Class.extend({
     draw: function(ctx){
         // only draw if the map needs new tiles rendered, otherwise just translate the map!
         //hopefully much more efficient
-        if(ANCHOR===undefined || Math.abs(ANCHOR[0] - PLAYER_CAMERA.x )>PADDING ||  Math.abs(ANCHOR[1] - PLAYER_CAMERA.y )>PADDING) {
+        if(ANCHOR===undefined || Math.abs(ANCHOR[0] - PLAYER_CAMERA.x )>(PADDING-2) ||  Math.abs(ANCHOR[1] - PLAYER_CAMERA.y )>(PADDING-2)) {
             gMap.draw_from_scratch(ctx);
         }
         else{
@@ -237,6 +237,7 @@ var TILEDMapClass = Class.extend({
 
     lazy_draw: function(ctx){
         // just center the map
+
         ctx.save();
         ctx.translate((ANCHOR[0]-PLAYER_CAMERA.x)*RESOLUTION,(ANCHOR[1]-PLAYER_CAMERA.y)*RESOLUTION);
         ctx.drawImage(RENDER_CANVAS, -RESOLUTION*PADDING, -RESOLUTION*PADDING);
@@ -249,6 +250,8 @@ var TILEDMapClass = Class.extend({
     // Draws all of the map data to the passed-in
     // canvas context, 'ctx'.
     draw_from_scratch: function (ctx) {
+
+
         // First, we need to check if the map data has
         // already finished loading.
         if(!gMap.fullyLoaded) return;
@@ -276,8 +279,12 @@ var TILEDMapClass = Class.extend({
         // YOUR CODE HERE
 
 
-        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION + RESOLUTION*PADDING;
-        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION + RESOLUTION*PADDING;
+        //http://stackoverflow.com/questions/9942209/unwanted-lines-apearing-in-html5-canvas-using-tiles
+        //this is super important! that why we need to round!
+
+
+        offset_x= Math.floor(-window.PLAYER_CAMERA.x*RESOLUTION + RESOLUTION*PADDING);
+        offset_y= Math.floor(-window.PLAYER_CAMERA.y*RESOLUTION + RESOLUTION*PADDING);
 
         render_ctx= RENDER_CANVAS.getContext("2d");
 

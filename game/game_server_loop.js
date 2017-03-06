@@ -20,7 +20,6 @@ function Game_loop(){
                     id:"todo",
                     players:[]
                 };
-
 }
 
 

@@ -31,4 +31,9 @@ canvas{
     left:0;
     /*https://developer.mozilla.org/en/docs/Web/CSS/image-rendering */
    image-rendering: pixelated;
+   
+}
+body{
+  /*TODO find a good crosshair for the cursor */
+  cursor: url(http://www.rw-designer.com/cursor-extern.php?id=30925),auto;
 }
