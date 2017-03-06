@@ -37,11 +37,12 @@ parse_snapshot = function(data){
 
 
 window.requestAnimId=0;
+window.GAME_LOOP_COUNTER=0;// so that we don't print to console like nuts
 game_loop= function(){
     // The game loop is called every time the browser refreshes the screen, 
     // this method is efficent since it won't be called when the tab is not in focus
     // and it syncs with screen paint actions so that the scene is rendered halfway through our updates
-
+    GAME_LOOP_COUNTER=(GAME_LOOP_COUNTER+1)%10000;
     requestAnimId=window.requestAnimationFrame(game_loop);
     client_time= (new Date() -LERP)%86400000; // does it matter if this is called before or after requestAnimationFrame?
 
@@ -94,6 +95,7 @@ window.onresize =resize= function(){
 
 };
 
+
 interpolate= function(time,interpolated_snap){
     // modifies the interpolated_snap which is a passed reference
     // calculates all the interpolated player positions
@@ -128,7 +130,8 @@ interpolate= function(time,interpolated_snap){
     //the time is too far behind the buffer
     // this is likely a clock sync issue
     if (before=== undefined){
-        console.log("WARNING before undefined");
+        if(GAME_LOOP_COUNTER%120 ==0)console.log("WARNING before undefined");
+        
         interpolated_snap.players=SNAP_BUFFER[0].players;
         return;
     }
@@ -136,7 +139,7 @@ interpolate= function(time,interpolated_snap){
     //the time is too far ahead of the buffer
     // this could be lag or clock sync if ridiculously huge
     if (after=== undefined){
-        console.log("WARNING after undefined");
+        if(GAME_LOOP_COUNTER%120 ==0)console.log("WARNING after undefined");
         interpolated_snap.players=SNAP_BUFFER[0].players;
         return;
     }
@@ -171,25 +174,37 @@ interpolate= function(time,interpolated_snap){
         player={};
         player.username=player_a.username; //TODO is there a better way to do this?
         player.id=player_a.id;
+        player.cars=[];
 
-        //calculate the interpolated values
-        player.x= weight_a* player_a.x + weight_b* player_b.x;
-        player.y= weight_a* player_a.y + weight_b* player_b.y;
-
-        if (Math.abs(player_a.angle -player_b.angle) >100){
-            //crossing the modula boundary TODO make this better
-            player.angle= player_a.angle;
-        }
-        else{
-            player.angle= weight_a* player_a.angle + weight_b* player_b.angle;
-        }
+        interpolate_coords(player,player_a,player_b,weight_a,weight_b);
         
+        for (var j=0, len_j = Math.min(player_b.cars.length,player_a.cars.length); j<len_j;j++){
+            car={};
+            interpolate_coords(car,player_a.cars[j],player_b.cars[j],weight_a,weight_b );
+            player.cars.push(car);
+        }
 
         //append the interpolated player to the list of players
         interpolated_snap.players.push(player);
     }
 
 };
+
+interpolate_coords = function(result, object_a,object_b,weight_a,weight_b){
+    //stores interpolated coords in the result object
+    //calculate the interpolated values
+    result.x= weighted_average(object_a.x,object_b.x, weight_a,weight_b);
+    result.y= weighted_average(object_a.y,object_b.y, weight_a,weight_b);
+
+    if (Math.abs(object_a.angle -object_b.angle) >100){
+        //crossing the modula boundary TODO make this better
+        result.angle= object_a.angle;
+    }
+    else{
+        result.angle= weighted_average(object_a.angle,object_b.angle, weight_a,weight_b);
+    }
+};
+
 
 /*
 window.onkeypress =game_onkeypress = function(e){

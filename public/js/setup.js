@@ -10,8 +10,8 @@ function setup(){
 
     window.bgCanvas.height=VIEWPORT_HEIGHT;
     window.bgCanvas.width=VIEWPORT_WIDTH;
-    window.fgCanvas.height=VIEWPORT_HEIGHT*3;
-    window.fgCanvas.width=VIEWPORT_WIDTH*3;
+    window.fgCanvas.height=VIEWPORT_HEIGHT*SPRITE_SCALE;
+    window.fgCanvas.width=VIEWPORT_WIDTH*SPRITE_SCALE;
 
     resize(); // run the on resize function so that all the canvases are now the right size
 

@@ -8,7 +8,15 @@
              id: "string",
              x: "int 0 10000",
              y: "int 0 10000",
-             angle: "int 0 10000"
+             angle: "int 0 10000",
+             cars: [
+                    {
+                    type: "int 0 8",
+                    x: "int 0 10000",
+                    y: "int 0 10000",
+                    angle: "int 0 10000",   
+                    }
+                ]
             }
         ]
 }

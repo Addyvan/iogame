@@ -5,7 +5,7 @@
 
 //anchor around where the bg is, when we leave it we re render, otherwise we just slide stuff around
 ANCHOR=undefined;
-
+PADDING=2; // # of tiles of padding that are rendered in each direction
 
 //guh margins are a pain
 MARGINS=1;
@@ -73,8 +73,8 @@ var TILEDMapClass = Class.extend({
 
         //this should proably not be shoved in here but unclear where else to put it
         window.RENDER_CANVAS=document.createElement('canvas');
-        RENDER_CANVAS.height= VIEWPORT_HEIGHT+2*RESOLUTION ;
-        RENDER_CANVAS.width= VIEWPORT_WIDTH+2*RESOLUTION ;
+        RENDER_CANVAS.height= VIEWPORT_HEIGHT+2*RESOLUTION*PADDING ;
+        RENDER_CANVAS.width= VIEWPORT_WIDTH+2*RESOLUTION*PADDING ;
 
         // Perform an XMLHttpRequest to grab the
         // JSON file at url 'map'.
@@ -227,7 +227,7 @@ var TILEDMapClass = Class.extend({
     draw: function(ctx){
         // only draw if the map needs new tiles rendered, otherwise just translate the map!
         //hopefully much more efficient
-        if(ANCHOR===undefined || Math.abs(ANCHOR[0] - PLAYER_CAMERA.x )>1 ||  Math.abs(ANCHOR[1] - PLAYER_CAMERA.y )>1) {
+        if(ANCHOR===undefined || Math.abs(ANCHOR[0] - PLAYER_CAMERA.x )>PADDING ||  Math.abs(ANCHOR[1] - PLAYER_CAMERA.y )>PADDING) {
             gMap.draw_from_scratch(ctx);
         }
         else{
@@ -239,7 +239,7 @@ var TILEDMapClass = Class.extend({
         // just center the map
         ctx.save();
         ctx.translate((ANCHOR[0]-PLAYER_CAMERA.x)*RESOLUTION,(ANCHOR[1]-PLAYER_CAMERA.y)*RESOLUTION);
-        ctx.drawImage(RENDER_CANVAS, -RESOLUTION, -RESOLUTION);
+        ctx.drawImage(RENDER_CANVAS, -RESOLUTION*PADDING, -RESOLUTION*PADDING);
         ctx.restore();
         
 
@@ -276,8 +276,8 @@ var TILEDMapClass = Class.extend({
         // YOUR CODE HERE
 
 
-        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION + RESOLUTION;
-        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION + RESOLUTION;
+        offset_x= -window.PLAYER_CAMERA.x*RESOLUTION + RESOLUTION*PADDING;
+        offset_y= -window.PLAYER_CAMERA.y*RESOLUTION + RESOLUTION*PADDING;
 
         render_ctx= RENDER_CANVAS.getContext("2d");
 
@@ -296,7 +296,7 @@ var TILEDMapClass = Class.extend({
                 var worldX = offset_x+ Math.floor(tileIdx % this.numXTiles)* this.tileSize.x;
                 var worldY = offset_y+ Math.floor(tileIdx / this.numXTiles)* this.tileSize.y;
 
-                if ( ( worldX< -RESOLUTION*2 )|| (worldY< -RESOLUTION*2) || (worldX> bgCanvas.width+RESOLUTION*2) || (worldY> bgCanvas.height+RESOLUTION*2 ) ) continue; // skip that tile if it's off screen
+                if ( ( worldX< -RESOLUTION*(PADDING+2) )|| (worldY< -RESOLUTION*(PADDING+2)) || (worldX> bgCanvas.width+RESOLUTION*(PADDING+2)) || (worldY> bgCanvas.height+RESOLUTION*(PADDING+2) ) ) continue; // skip that tile if it's off screen
 
                 render_ctx.drawImage(tPKT.img, tPKT.px , tPKT.py,
                             this.tileSize.x, this.tileSize.y,

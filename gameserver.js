@@ -48,7 +48,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(reason){
         game_loop.remove_player(socket.id,socket.handshake.query);
     });
-    io.emit('playerID',{id: socket.id});
+    socket.emit('playerID',{id: socket.id}); // make sure to only send theis to the client, io.emit was sending this to all players
 });
 
 broadcast = function(){
@@ -71,6 +71,7 @@ console.log("listening on port "+ c["port"]);
 
 //load in some classes
 Player=require(__dirname +'/game/player_class.js')
+Car=require(__dirname +'/game/car_class.js')
 Gmap= require(__dirname +'/game/map_class.js')
 
 //begin the game loop
