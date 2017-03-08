@@ -76,57 +76,57 @@ Player.prototype.tick = function(){
     this.prep_snapshot();
 };
 
+//////////////////////////////////////////////
+// Calvin Tidied 7/03/17
+//////////////////////////////////////////////
 Player.prototype.update_position = function(){
     // apply acceleration and update position
     this.speed+= this.accel_rate*this.accelerating;
 
-    if(this.speed<0 && !this.reversing){
-        this.reversing=1;
-        this.progress=0.99-this.progress;
+    if(this.speed < 0){
+        if(!this.reversing){
+            this.reversing = 1;
+            this.progress=1-this.progress;
+        }
+        this.speed = Math.max(this.speed, -0.5*this.max_speed);
+    }else if(this.speed > 0){
+        if(this.reversing){
+            this.reversing = 0;
+            this.progress=1-this.progress;
+        }
+        this.speed = Math.min(this.speed, this.max_speed);
     }
-
-    if(this.speed>0 && this.reversing){
-        this.reversing=0;
-        this.progress=0.99-this.progress;
-    }
-
-    if (this.speed >this.max_speed) this.speed= this.max_speed;
-    if (this.speed< -0.2*this.max_speed) this.speed = -0.2*this.max_speed; //TODO figure out how reversing should behave
 
     this.game.map.move(this);
 
     // call the next car which will call the next car and so on...
-    if(this.attached_back != undefined){
+    if(this.attached_back){
         this.attached_back.update_position();
     }
-
 };
 
+////////////////////////////////////
+// Calvin tidied 8/03/17
+// Define # of cars to spawn in a loop
+////////////////////////////////////
 Player.prototype.spawn = function(){
     //spawns the player which uses the map to set their coords
     // also resets various values
 
-
-
-
+    var init_num_cars = 10; // Move this guy somewhere meaningful
+    
     console.log("spawning!");
     //console.log(this);
     this.dead =0;
     this.game.map.spawn_location(this);
-
-
-    // add a car
-    //must be done after the player has been place on the map
-    new_car= new Car();
-    new_car.attach(this);
-
-    new_car_2= new Car();
-    new_car_2.attach(new_car);
-
-    new_car_3= new Car();
-    new_car_3.attach(new_car_2);
-
-
+ 
+    var CAR_ARR = new Array(new Car());
+    
+    CAR_ARR[0].attach(this);
+    for(var x = 1; x < init_num_cars; x++){
+        CAR_ARR.push(new Car());
+        CAR_ARR[x].attach(CAR_ARR[x-1]);
+    }
 
 };
 Player.prototype.prep_snapshot = function(){
