@@ -6,12 +6,15 @@
     TODO put all the values into the config file
 
     TODO make the cars not decouple from the train
+
+    car types:
+        0- misc car
+        1- engine
 */
 
 
 //Constructor
 function Car(args={}){
-    this.is_car=1;
     this.player=undefined;
     this.x=undefined;
     this.y=undefined;
@@ -30,6 +33,7 @@ function Car(args={}){
     this.snapshot_data={};
     this.game=undefined;
     this.next_turn=undefined; // TODO
+    this.reversing=0;
 
     //this.prep_snapshot();
 }
@@ -126,7 +130,7 @@ Car.prototype.attach = function(target){
     this.x= target.x -headings_to_vector[target.heading][0];
     this.y= target.y -headings_to_vector[target.heading][1];
 
-    if(target.is_car){
+    if(target.attached_front){
         this.player = target.player;
     }
     else{

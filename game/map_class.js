@@ -203,7 +203,7 @@ Gmap.prototype.move = function(player){
     if (player.progress>1){
         // store info for next car and reset car state
 
-        if(!player.is_car || player.attached_front === undefined){
+        if( player.attached_front === undefined){
             player.progress=0; //TODO we should bank the extra distance right?
         }else{
             //sync the car up with the rest of the train? TODO make this legit

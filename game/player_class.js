@@ -1,7 +1,10 @@
 /*
     The player class
     
-    TODO put all the values into the config file
+    TODO:
+        -put all the values into the config file
+        -move all car related functions to the engine class so that the player doesn't have coordinates in this class
+
     useful read on classes in node: http://book.mixu.net/node/ch6.html
 */
 
@@ -23,7 +26,6 @@ function Player(args){
     this.team= undefined;
 
     //state
-    this.is_car=0;
     this.dead=1;
     this.hp=0;
     this.x=undefined;
@@ -53,6 +55,7 @@ function Player(args){
 
 
     //cars chain
+    this.engine=undefined;
     this.attached_back=undefined;
 
 
@@ -79,6 +82,8 @@ Player.prototype.tick = function(){
 //////////////////////////////////////////////
 // Calvin Tidied 7/03/17
 //////////////////////////////////////////////
+
+// todo remove and consolidate to engine class
 Player.prototype.update_position = function(){
     // apply acceleration and update position
     this.speed+= this.accel_rate*this.accelerating;
@@ -118,6 +123,8 @@ Player.prototype.spawn = function(){
     console.log("spawning!");
     //console.log(this);
     this.dead =0;
+    this.engine= new Engine({player:this});
+
     this.game.map.spawn_location(this);
  
     var CAR_ARR = new Array(new Car());
@@ -132,6 +139,7 @@ Player.prototype.spawn = function(){
 Player.prototype.prep_snapshot = function(){
     // set the snapshot data fields
 
+    // todo remove and consolidate to engine class
     this.snapshot_data.x= Math.round(this.x*100);
     this.snapshot_data.y= Math.round(this.y*100);
     this.snapshot_data.angle= Math.round(this.angle); //TODO
@@ -152,6 +160,7 @@ Player.prototype.build_car_list= function(){
 
 Player.prototype.parse = function(inputs){
     // parse player inputs
+    // todo make this take into context the trains orientation so that controls are properly mapped
 
     if(inputs[0]){ //up
         this.accelerating=1;
