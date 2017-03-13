@@ -175,12 +175,11 @@ interpolate= function(time,interpolated_snap){
         player.username=player_a.username; //TODO is there a better way to do this?
         player.id=player_a.id;
         player.cars=[];
-
-        interpolate_coords(player,player_a,player_b,weight_a,weight_b);
         
         for (var j=0, len_j = Math.min(player_b.cars.length,player_a.cars.length); j<len_j;j++){
             car={};
             interpolate_coords(car,player_a.cars[j],player_b.cars[j],weight_a,weight_b );
+            car.type= player_b.cars[j].type;
             player.cars.push(car);
         }
 
@@ -246,7 +245,7 @@ setCameraPosition = function(snapshot){
     }
     if(player===undefined)return;
 
-    PLAYER_CAMERA.x=Math.min( Math.max(MAP_WIDTH-PLAYER_CAMERA.w,0)  ,Math.max(player.x/100 - PLAYER_CAMERA.w/2 ,0 ) );
-    PLAYER_CAMERA.y=Math.min( Math.max(MAP_HEIGHT-PLAYER_CAMERA.h,0)  ,Math.max(player.y/100 - PLAYER_CAMERA.h/2 ,0 ) );
+    PLAYER_CAMERA.x=Math.min( Math.max(MAP_WIDTH-PLAYER_CAMERA.w,0)  ,Math.max(player.cars[0].x/100 - PLAYER_CAMERA.w/2 ,0 ) );
+    PLAYER_CAMERA.y=Math.min( Math.max(MAP_HEIGHT-PLAYER_CAMERA.h,0)  ,Math.max(player.cars[0].y/100 - PLAYER_CAMERA.h/2 ,0 ) );
     //console.log(PLAYER_CAMERA.x,PLAYER_CAMERA.y);
 };

@@ -15,7 +15,7 @@ function Engine(args={}) {
 
     this.player=args.player
     this.game= this.player.game;
-
+    this.player.snapshot_data.cars.push(this.snapshot_data);
 
     this.type=1; // 1 for engine
     this.hp=100; //todo put this in a config file
@@ -29,11 +29,15 @@ function Engine(args={}) {
     this.max_health=100;
     this.accel_rate=0.05/60;
     this.max_speed=7/60; // you can fly off the tracks if this is too high
-
+    
 }
 util.inherits(Engine, Car);
 
 // class methods
+
+//////////////////////////////////////////////
+// Calvin Tidied 7/03/17
+//////////////////////////////////////////////
 
 Engine.prototype.update_position = function(){
     // apply acceleration and update position

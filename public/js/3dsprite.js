@@ -1,5 +1,6 @@
 /*
     This file is temporary and experimental
+    todo revamp this
 */
  
 
@@ -20,12 +21,6 @@ draw_ugly_trains= function(ctx,snapshot){
     for(var i=0, len=snapshot.players.length;i<len; i++ ){
         //TODO find a nicer way to do this succintly
         //console.log(snapshot.players[i].x,snapshot.players[i].y);
-        game_coords= game_coords_to_screen(snapshot.players[i].x,snapshot.players[i].y) ;
-        px=game_coords[0];
-        py=game_coords[1];
-        //console.log(px,py);
-        draw_3d(ctx,ugly_train_img,px,py,snapshot.players[i].angle);
-
         //draw cars
         //console.log(snapshot.players[i]);
         for (var j=0, len_j=snapshot.players[i].cars.length;j<len_j; j++ ){
@@ -34,8 +29,13 @@ draw_ugly_trains= function(ctx,snapshot){
             car_px=car_game_coords[0];
             car_py=car_game_coords[1];
             //console.log(car_px,car_py);
-
-            draw_3d(ctx,ugly_car_img,car_px,car_py,snapshot.players[i].cars[j].angle);
+            if (snapshot.players[i].cars[j].type==0){
+                //todo this should be some kind of atlas
+                car_img=ugly_car_img;
+            }else if(snapshot.players[i].cars[j].type==1){
+                car_img=ugly_train_img;
+            }
+            draw_3d(ctx,car_img,car_px,car_py,snapshot.players[i].cars[j].angle);
         }   
     }
 

@@ -48,31 +48,28 @@ function get(buf) {
     var data1;
 
     var data1 = {};
+    data1.tick = reader.readUInt32BE() - 521332116;
+    data1.id = reader.readString8();
     var len2 = reader.readUInt8();
     var data2 = [];
     for (var i2 = 0; i2 < len2; i2++) {
         var data3 = {};
-        data3.x = reader.readUInt16BE() - 14061;
+        data3.id = reader.readString8();
         data3.username = reader.readString8();
-        data3.y = reader.readUInt16BE() - 26669;
         var len4 = reader.readUInt8();
         var data4 = [];
         for (var i4 = 0; i4 < len4; i4++) {
             var data5 = {};
-            data5.angle = reader.readUInt16BE() - 51889;
-            data5.y = reader.readUInt16BE() - 40088;
-            data5.type = reader.readUInt8() - 85;
-            data5.x = reader.readUInt16BE() - 22629;
+            data5.y = reader.readUInt16BE() - 45865;
+            data5.x = reader.readUInt16BE() - 5801;
+            data5.type = reader.readUInt8() - 135;
+            data5.angle = reader.readUInt16BE() - 2234;
             data4.push(data5);
         }
         data3.cars = data4;
-        data3.angle = reader.readUInt16BE() - 6569;
-        data3.id = reader.readString8();
         data2.push(data3);
     }
     data1.players = data2;
-    data1.timestamp = reader.readUInt32BE() - 3473208535;
-    data1.id = reader.readString8();
-    data1.tick = reader.readUInt32BE() - 4217718662;
+    data1.timestamp = reader.readUInt32BE() - 2785872083;
     return data1;
 }

@@ -126,16 +126,13 @@ Car.prototype.attach = function(target){
     this.heading= target.last_heading;
     this.last_heading= target.last_heading;// MAJOR TODO, if the track isn't straight it will cause an error
     this.progress=target.progress;
-    console.log(target.heading);
+    //console.log(target);
     this.x= target.x -headings_to_vector[target.heading][0];
     this.y= target.y -headings_to_vector[target.heading][1];
 
-    if(target.attached_front){
-        this.player = target.player;
-    }
-    else{
-        this.player=target;
-    }
+    
+    this.player = target.player;
+    
     this.player.snapshot_data.cars.push(this.snapshot_data);
 };
 

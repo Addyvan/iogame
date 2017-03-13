@@ -39,10 +39,12 @@ module.exports = {
 
         var byteLen = 0;
 
+        byteLen += 1 + data1.id.length * 1;
         var data2 = data1.players;
         ++byteLen
         for (var i2 = 0; i2 < data2.length; i2++) {
             var data3 = data2[i2];
+            byteLen += 1 + data3.id.length * 1;
             byteLen += 1 + data3.username.length * 1;
             var data4 = data3.cars;
             ++byteLen
@@ -50,36 +52,30 @@ module.exports = {
                 var data5 = data4[i4];
                 byteLen += 7;
             }
-            byteLen += 1 + data3.id.length * 1;
-            byteLen += 6;
         }
-        byteLen += 1 + data1.id.length * 1;
         byteLen += 8;
         var writer = new Writer(byteLen);
+        writer.writeUInt32BE(data1.tick + 521332116);
+        writer.writeString8(data1.id);
         var data2 = data1.players;
         var len2 = data2.length
         writer.writeUInt8(len2)
         for (var i2 = 0; i2 < len2; i2++) {
             var data3 = data2[i2];
-            writer.writeUInt16BE(data3.x + 14061);
+            writer.writeString8(data3.id);
             writer.writeString8(data3.username);
-            writer.writeUInt16BE(data3.y + 26669);
             var data4 = data3.cars;
             var len4 = data4.length
             writer.writeUInt8(len4)
             for (var i4 = 0; i4 < len4; i4++) {
                 var data5 = data4[i4];
-                writer.writeUInt16BE(data5.angle + 51889);
-                writer.writeUInt16BE(data5.y + 40088);
-                writer.writeUInt8(data5.type + 85);
-                writer.writeUInt16BE(data5.x + 22629);
+                writer.writeUInt16BE(data5.y + 45865);
+                writer.writeUInt16BE(data5.x + 5801);
+                writer.writeUInt8(data5.type + 135);
+                writer.writeUInt16BE(data5.angle + 2234);
             }
-            writer.writeUInt16BE(data3.angle + 6569);
-            writer.writeString8(data3.id);
         }
-        writer.writeUInt32BE(data1.timestamp + 3473208535);
-        writer.writeString8(data1.id);
-        writer.writeUInt32BE(data1.tick + 4217718662);
+        writer.writeUInt32BE(data1.timestamp + 2785872083);
         return writer.toBuffer();
     }
 };
