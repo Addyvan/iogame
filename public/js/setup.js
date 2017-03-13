@@ -24,6 +24,9 @@ function setup(){
     gMap.load('/assets/map.json');
     load_ugly_sprite();
 
+    //start audio and begin loading in sounds
+    init_audio();
+
     // connect to socket and set event handlers
     connect_to_socket();
 

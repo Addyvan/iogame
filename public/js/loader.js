@@ -16,12 +16,15 @@ window.onload = function() {
                 "js/3dsprite.js",
                 "js/inputHandler.js",
                 "js/simple_protocols/setBrowser.js",
-                "js/simple_protocols/getBrowser.js"
+                "js/simple_protocols/getBrowser.js",
+                "js/audioHandler.js"
                  ];
     for(i=0 ; i< scripts.length;i++){
         // todo add error handling
-        $.getScript(scripts[i], function(){ if(++scripts_loaded>=scripts.length)setup();  } );
+        $.getScript(scripts[i], function(){ if(++scripts_loaded>=scripts.length){
+                                                                                setup(); 
+                                                                                console.log("all scripts loaded");
+                                                                                } } );
     }
-    
-    console.log("all scripts loaded");
+
 };

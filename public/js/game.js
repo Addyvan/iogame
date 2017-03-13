@@ -206,33 +206,34 @@ interpolate_coords = function(result, object_a,object_b,weight_a,weight_b){
 };
 
 
-/*
+
 window.onkeypress =game_onkeypress = function(e){
-    // this is a temporary function meant to test the graphics without any game logic
-    speed=0.25;
-    //console.log(PLAYER_CAMERA,e.charCode);
+    // this is a temporary function meant to test the graphics/stuff without any game logic
+    
+    //speed=0.25;
     if (e.charCode === 97) { 
-        PLAYER_CAMERA.x-=speed;
+        //PLAYER_CAMERA.x-=speed;
     }
     else if (e.charCode === 100) {
-        PLAYER_CAMERA.x+=speed;
+        //PLAYER_CAMERA.x+=speed;
     }
     else if (e.charCode === 119) {
-        PLAYER_CAMERA.y-=speed;
+        //PLAYER_CAMERA.y-=speed;
     }
     else if (e.charCode === 115) {
-        PLAYER_CAMERA.y+=speed;
+        //PLAYER_CAMERA.y+=speed;
     }
     else if(e.charCode === 101) {// clockwise turn e
-        ANGLE= (ANGLE +10)%360;
+        playSound("assets/audio/vapsquad_yellyguy_arena_round_start.wav");
+        //ANGLE= (ANGLE +10)%360;
     }
     else if(e.charCode === 113) {//counter q
-        inputHandler.send();
-        ANGLE= (ANGLE -10)%360;
+       // inputHandler.send();
+       // ANGLE= (ANGLE -10)%360;
     }
     
 };
-*/
+
 
 setCameraPosition = function(snapshot){
     //set the player's camera to center on their train
