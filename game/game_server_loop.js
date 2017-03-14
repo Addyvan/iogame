@@ -5,6 +5,11 @@
     requires the player class to be loaded
 */
 
+const path = require('path')
+
+const Gmap = require(path.resolve(__dirname, 'map_class'))
+const Player = require(path.resolve(__dirname, 'player_class'))
+
 // Constructor
 function GameLoop () {
     // intialize variables

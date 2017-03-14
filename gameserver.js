@@ -65,13 +65,6 @@ function broadcast () {
 io.listen(c['port'])
 console.log('listening on port ' + c['port'])
 
-// load in some classes
-// todo maybe do this somewhere more obvious/ figure out if there is a cleaner way to do this?
-Player = require(path.resolve('game', 'player_class.js'))
-Car = require(path.resolve('game', 'car_class.js'))
-Engine = require(path.resolve('game', 'engine_class.js'))
-Gmap = require(path.resolve('game', 'map_class.js'))
-
 // begin the game loop
 const GameLoop = require(path.resolve('game', 'game_server_loop.js'))
 const gameLoop = new GameLoop()

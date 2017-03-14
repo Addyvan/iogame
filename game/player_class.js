@@ -8,6 +8,11 @@
     useful read on classes in node: http://book.mixu.net/node/ch6.html
 */
 
+const path = require('path')
+
+const Engine = require(path.resolve(__dirname, 'engine_class'))
+const Car = require(path.resolve(__dirname, 'car_class'))
+
 // Constructor
 function Player (args) {
     // initialize variables
