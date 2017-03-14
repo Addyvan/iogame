@@ -1,14 +1,16 @@
+const path = require('path')
+
 // listen for clients trying to connect to the server and send them a simple message when they connect
 var io = require('socket.io')()
 
 // Import game settings.
-var c = require(__dirname + '/game/config.json')
+var c = require(path.resolve('game', 'config.json'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
 // atm the code generator is buggy but it's fixable
-var sp_set = require(__dirname + '/game/setNodeJS.js')
-var sp_get = require(__dirname + '/game/getNodeJS.js')
+var spSet = require(path.resolve('game', 'setNodeJS.js'))
+var spGet = require(path.resolve('game', 'getNodeJS.js'))
 
 // Keep a dict of active connections
 var sockets = {}
@@ -33,30 +35,30 @@ io.on('connection', function (socket) {
     // no real reason for this now but might be good for later optimization to have it in
   socket.join('game')
 
-  socket.player = game_loop.add_player(socket.id, socket.handshake.query)
+  socket.player = gameLoop.add_player(socket.id, socket.handshake.query)
 
-  socket.on('a', function (moves_binary) {
+  socket.on('a', function (movesBinary) {
         // receive key inputs from the player
-        // console.log(moves_binary);
-    moves = sp_get.get(moves_binary)
+        // console.log(movesBinary);
+    const moves = spGet.get(movesBinary)
         // console.log(moves);
     socket.player.parse(moves)
   })
   socket.on('disconnect', function (reason) {
-    game_loop.remove_player(socket.id, socket.handshake.query)
+    gameLoop.remove_player(socket.id, socket.handshake.query)
   })
   socket.emit('playerID', {id: socket.id}) // make sure to only send theis to the client, io.emit was sending this to all players
 })
 
-broadcast = function () {
+function broadcast () {
     // broadcast a snapshot to all clients
     // TODO improve general efficiency
-  if (game_loop.snapshot === undefined) return
-  binary_snapshot = sp_set.set(game_loop.snapshot)
-    // console.log(game_loop.snapshot);
-    // console.log(binary_snapshot);
+  if (gameLoop.snapshot === undefined) return
+  const binarySnapshot = spSet.set(gameLoop.snapshot)
+    // console.log(gameLoop.snapshot);
+    // console.log(binarySnapshot);
 
-  io.in('game').emit('s', binary_snapshot)
+  io.in('game').emit('s', binarySnapshot)
 }
 
 // activate the socket
@@ -65,15 +67,15 @@ console.log('listening on port ' + c['port'])
 
 // load in some classes
 // todo maybe do this somewhere more obvious/ figure out if there is a cleaner way to do this?
-Player = require(__dirname + '/game/player_class.js')
-Car = require(__dirname + '/game/car_class.js')
-Engine = require(__dirname + '/game/engine_class.js')
-Gmap = require(__dirname + '/game/map_class.js')
+Player = require(path.resolve('game', 'player_class.js'))
+Car = require(path.resolve('game', 'car_class.js'))
+Engine = require(path.resolve('game', 'engine_class.js'))
+Gmap = require(path.resolve('game', 'map_class.js'))
 
 // begin the game loop
-Game_loop = require(__dirname + '/game/game_server_loop.js')
-var game_loop = new Game_loop()
-game_loop.start()
+const GameLoop = require(path.resolve('game', 'game_server_loop.js'))
+const gameLoop = new GameLoop()
+gameLoop.start()
 
 // begin broadcasting
 setInterval(broadcast, 1000 / 20)

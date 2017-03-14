@@ -1,11 +1,12 @@
-var express = require('express')
-var app = express()
-var port = 3700
+const express = require('express')
+const path = require('path')
+const app = express()
+const port = 3700
 
 // tell express where to find templates
-app.set('views', __dirname + '/templates')
+app.set('views', path.resolve(__dirname, 'templates'))
 // tell express where to find files
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(path.resolve(__dirname, 'public')))
 
 // set the render engine so that we can use templates
 app.set('view engine', 'pug')
