@@ -4,13 +4,13 @@ const path = require('path')
 var io = require('socket.io')()
 
 // Import game settings.
-var c = require(path.resolve('game', 'config.json'))
+var c = require(path.resolve(__dirname, 'game', 'config.json'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
 // atm the code generator is buggy but it's fixable
-var spSet = require(path.resolve('game', 'setNodeJS.js'))
-var spGet = require(path.resolve('game', 'getNodeJS.js'))
+var spSet = require(path.resolve(__dirname, 'game', 'setNodeJS.js'))
+var spGet = require(path.resolve(__dirname, 'game', 'getNodeJS.js'))
 
 // Keep a dict of active connections
 var sockets = {}
@@ -66,7 +66,7 @@ io.listen(c['port'])
 console.log('listening on port ' + c['port'])
 
 // begin the game loop
-const GameLoop = require(path.resolve('game', 'game_server_loop.js'))
+const GameLoop = require(path.resolve(__dirname, 'game', 'game_server_loop.js'))
 const gameLoop = new GameLoop()
 gameLoop.start()
 

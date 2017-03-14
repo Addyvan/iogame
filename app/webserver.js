@@ -4,7 +4,7 @@ const app = express()
 const port = 3700
 
 // tell express where to find templates
-app.set('views', path.resolve(__dirname, 'templates'))
+app.set('views', path.resolve(__dirname, 'views'))
 // tell express where to find files
 app.use(express.static(path.resolve(__dirname, 'public')))
 

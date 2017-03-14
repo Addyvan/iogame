@@ -95,7 +95,7 @@ Gmap.prototype.load = function (mapJsonName) {
     // load and parse a mapJson file
   this.map_name = mapJsonName
 
-  const mapJson = require(path.resolve(__dirname, '..', 'public', 'assets', mapJsonName)) // TODO make this more robust
+  const mapJson = require(path.resolve(__dirname, '..', 'maps', mapJsonName)) // TODO make this more robust
   this.width = mapJson['width']
   this.height = mapJson['height']
 
