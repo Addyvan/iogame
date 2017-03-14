@@ -2,10 +2,17 @@
     "name": "train_prototype",
     "version": "0.0.0",
     "description": "train io game prototype",
-    "dependencies": {
-        "socket.io": "latest",
-        "express": "latest",
-        "pug": "latest"
+    "scripts": {
+        "lint": "standard | snazzy"
     },
-    "author": "developer"
+    "dependencies": {
+        "express": "latest",
+        "pug": "latest",
+        "socket.io": "latest"
+    },
+    "author": "developer",
+    "devDependencies": {
+        "snazzy": "^6.0.0",
+        "standard": "^9.0.1"
+    }
 }
