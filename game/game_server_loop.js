@@ -64,26 +64,15 @@ GameLoop.prototype.add_player = function (id, query) {
 }
 
 GameLoop.prototype.remove_player = function (id) {
-    // remove a player from the list of players
+  this.snapshot.players = this.snapshot.players.filter((player) => {
+    return player.id !== id
+  })
 
-    // remember to remove the player from the snapshot as well!
-    // think this has to be first or we may end up with undefined troubles
-    // http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
-
-  for (var i = 0, len = this.snapshot.players.length; i < len; i++) {
-    if (this.snapshot.players[i].id === id) {
-      this.snapshot.players.splice(i, 1)
-      break
-    }
-  }
-
-  for (var i = 0, len = this.players.length; i < len; i++) {
-    if (this.players[i].id === id) {
-      this.players.splice(i, 1)
-      break
-    }
-  }
+  this.players = this.players.filter((player) => {
+    return player.id !== id
+  })
 }
+
 GameLoop.prototype.prep_snapshot = function () {
     // update the snapshot
   this.snapshot.tick = this.tick
