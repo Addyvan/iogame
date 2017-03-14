@@ -13,7 +13,7 @@ function Player (args) {
     // initialize variables
 
   this.id = args.id
-  if (args.username === undefined || args.username == '') {
+  if (args.username === undefined || args.username === '') {
     this.username = 'a rando train'
   } else {
     this.username = args.username
@@ -51,7 +51,7 @@ Player.prototype.spawn = function () {
     // spawns the player which uses the map to set their coords
     // also resets various values
 
-  var init_num_cars = 10 // Move this guy somewhere meaningful
+  var initNumCars = 10 // Move this guy somewhere meaningful
 
   console.log('spawning!')
     // console.log(this);
@@ -62,7 +62,7 @@ Player.prototype.spawn = function () {
 
   var CAR_ARR = new Array(this.engine)
 
-  for (var x = 1; x < init_num_cars; x++) {
+  for (var x = 1; x < initNumCars; x++) {
     CAR_ARR.push(new Car())
     CAR_ARR[x].attach(CAR_ARR[x - 1])
   }

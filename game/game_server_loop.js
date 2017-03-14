@@ -6,7 +6,7 @@
 */
 
 // Constructor
-function Game_loop () {
+function GameLoop () {
     // intialize variables
   this.tick = 0
   this.timestamp = undefined
@@ -23,7 +23,7 @@ function Game_loop () {
 }
 
 // class methods
-Game_loop.prototype.step = function () {
+GameLoop.prototype.step = function () {
     // this function is called every tick and runs the game
 
   for (var i = 0, len = this.players.length; i < len; i++) {
@@ -40,25 +40,25 @@ Game_loop.prototype.step = function () {
     // console.log(this.snapshot);
 }
 
-Game_loop.prototype.start = function () {
+GameLoop.prototype.start = function () {
     // this function starts the game loop. there is no function to end it presently
     // http://stackoverflow.com/questions/10129363/javascript-class-this-method-called-with-setinterval
     // this behaves very strangely in js apparently
-  myobj = this
+  const myobj = this
   setInterval(function () { myobj.step() }, 1000 / 60)
 }
 
-Game_loop.prototype.add_player = function (id, query) {
+GameLoop.prototype.add_player = function (id, query) {
     // add a player to the list of players
   console.log(`${query.username} is joining the game`)
     // CRITICAL TODO, findout whether or not this is passing a pointer or some crazy recursive copy
-  new_player = new Player({id: id, username: query.username, game: this })
-  this.players.push(new_player)
-  this.snapshot.players.push(new_player.snapshot_data)
-  return new_player
+  const newPlayer = new Player({ id: id, username: query.username, game: this })
+  this.players.push(newPlayer)
+  this.snapshot.players.push(newPlayer.snapshot_data)
+  return newPlayer
 }
 
-Game_loop.prototype.remove_player = function (id) {
+GameLoop.prototype.remove_player = function (id) {
     // remove a player from the list of players
 
     // remember to remove the player from the snapshot as well!
@@ -66,23 +66,23 @@ Game_loop.prototype.remove_player = function (id) {
     // http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
 
   for (var i = 0, len = this.snapshot.players.length; i < len; i++) {
-    if (this.snapshot.players[i].id == id) {
+    if (this.snapshot.players[i].id === id) {
       this.snapshot.players.splice(i, 1)
       break
     }
   }
 
   for (var i = 0, len = this.players.length; i < len; i++) {
-    if (this.players[i].id == id) {
+    if (this.players[i].id === id) {
       this.players.splice(i, 1)
       break
     }
   }
 }
-Game_loop.prototype.prep_snapshot = function () {
+GameLoop.prototype.prep_snapshot = function () {
     // update the snapshot
   this.snapshot.tick = this.tick
   this.snapshot.timestamp = this.timestamp
 }
 
-module.exports = Game_loop
+module.exports = GameLoop

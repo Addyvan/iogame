@@ -6,7 +6,10 @@
     inheritance: http://stackoverflow.com/questions/16213495/how-to-implement-inheritance-in-node-js-modules
 */
 
-var Car = require(__dirname + '/car_class.js'), util = require('util')
+const path = require('path')
+
+const Car = require(path.resolve(__dirname, 'car_class.js'))
+const util = require('util')
 
 // Constructor
 function Engine (args = {}) {

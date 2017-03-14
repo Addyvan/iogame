@@ -37,7 +37,7 @@ function Car (args = {}) {
     // this.prep_snapshot();
 }
 
-var headings_to_vector = {
+var headingsToVector = {
     // TODO put this in some sort of Utils file?
   0: [0, -1], // north
   1: [1, 0], // east
@@ -68,7 +68,7 @@ Car.prototype.prep_snapshot = function () {
   this.snapshot_data.type = this.type
 
     // call the next car which will call the next car and so on...
-  if (this.attached_back != undefined) {
+  if (this.attached_back) {
     this.attached_back.prep_snapshot()
   }
 }
@@ -102,7 +102,7 @@ Car.prototype.update_position = function () {
 
   this.turning = this.get_turn()// this has to be done after moving but also in proper order
     // call the next car
-  if (this.attached_back != undefined) {
+  if (this.attached_back) {
     this.attached_back.update_position()
   }
 }
@@ -118,8 +118,8 @@ Car.prototype.attach = function (target) {
   this.last_heading = target.last_heading// MAJOR TODO, if the track isn't straight it will cause an error
   this.progress = target.progress
     // console.log(target);
-  this.x = target.x - headings_to_vector[target.heading][0]
-  this.y = target.y - headings_to_vector[target.heading][1]
+  this.x = target.x - headingsToVector[target.heading][0]
+  this.y = target.y - headingsToVector[target.heading][1]
 
   this.player = target.player
 

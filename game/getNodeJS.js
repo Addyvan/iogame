@@ -46,7 +46,6 @@ module.exports = {
     }
 
     var reader = new Reader(buf)
-    var data1
 
     var data1 = []
     for (var i1 = 0; i1 < 4; i1++) {

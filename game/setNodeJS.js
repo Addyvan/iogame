@@ -57,18 +57,18 @@ module.exports = {
     var writer = new Writer(byteLen)
     writer.writeUInt32BE(data1.tick + 521332116)
     writer.writeString8(data1.id)
-    var data2 = data1.players
+    data2 = data1.players
     var len2 = data2.length
     writer.writeUInt8(len2)
-    for (var i2 = 0; i2 < len2; i2++) {
-      var data3 = data2[i2]
+    for (i2 = 0; i2 < len2; i2++) {
+      data3 = data2[i2]
       writer.writeString8(data3.id)
       writer.writeString8(data3.username)
-      var data4 = data3.cars
+      data4 = data3.cars
       var len4 = data4.length
       writer.writeUInt8(len4)
-      for (var i4 = 0; i4 < len4; i4++) {
-        var data5 = data4[i4]
+      for (i4 = 0; i4 < len4; i4++) {
+        data5 = data4[i4]
         writer.writeUInt16BE(data5.y + 45865)
         writer.writeUInt16BE(data5.x + 5801)
         writer.writeUInt8(data5.type + 135)
