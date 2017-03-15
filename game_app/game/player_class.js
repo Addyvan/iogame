@@ -25,9 +25,17 @@ function Player (args) {
   }
   this.game = args.game
 
+  //actions
+  this.actions={left:0,
+                right:0,
+                up:0,
+                down:0
+              }
+
   this.team = undefined
     // state
   this.dead = 1
+
 
     // cars chain
   this.engine = undefined
@@ -44,7 +52,7 @@ function Player (args) {
 
 Player.prototype.tick = function () {
     // this function is called every tick for each player to update their game state
-  this.engine.update_position()
+  this.engine.tick()
   this.prep_snapshot()
 }
 
@@ -86,9 +94,16 @@ Player.prototype.parse = function (inputs) {
     // parse player inputs
     // todo make this take into context the trains orientation so that controls are properly mapped
     // todo move this to the engine class when it is fixed up
+  this.actions.up= inputs[0]
+  this.actions.down= inputs[1]
+  this.actions.left= inputs[2]
+  this.actions.right= inputs[3]
+
+  /*
   if (inputs[0]) { // up
     this.engine.accelerating = 1
-  } else if (inputs[1]) { // down
+  } 
+    if (inputs[1]) { // down
     this.engine.accelerating = -1
   } else {
     this.engine.accelerating = 0
@@ -101,6 +116,7 @@ Player.prototype.parse = function (inputs) {
   } else {
     this.engine.turning = 1
   }
+  */
 }
 
 Player.prototype.RIP = function () {

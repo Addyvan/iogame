@@ -116,108 +116,107 @@ Gmap.prototype.spawn_location = function (player, team = 0) {
   player.last_heading = 1
 }
 
-Gmap.prototype.move = function (player) {
+Gmap.prototype.move = function (car) {
     // handle player movement
     // console.log(player.x,player.y);
 
     // keep the player in bounds
-  if (player.x < 0) player.x = 0
-  if (player.x > this.width)player.x = this.width - 0.2
-  if (player.y < 0) player.y = 0
-  if (player.y > this.height)player.y = this.height - 0.2
+  if (car.x < 0) car.x = 0
+  if (car.x > this.width)car.x = this.width - 0.2
+  if (car.y < 0) car.y = 0
+  if (car.y > this.height)car.y = this.height - 0.2
 
-  let tileX = Math.floor(player.x)
-  let tileY = Math.floor(player.y)
+  let tileX = Math.floor(car.x)
+  let tileY = Math.floor(car.y)
 
-  let heading = player.heading
-  let turning = player.turning
-  let speed = Math.abs(player.speed)
-  if (player.speed < 0) {
+  let heading = car.heading
+  let turning = car.turning
+  let speed = Math.abs(car.speed)
+  if (car.speed < 0) {
     heading = (heading + 2) % 4
-    turning = 1 // cant turn in reverse
   }
 
-  let playerTile = this.data[tileY * this.width + tileX % this.width]
-  if (playerTile !== 0)playerTile--//  due to the first gid in the tiled format, this could break with multiple tilesets TODO make robust
+  let carTile = this.data[tileY * this.width + tileX % this.width]
+  if (carTile !== 0)carTile--//  due to the first gid in the tiled format, this could break with multiple tilesets TODO make robust
 
-  const validMoves = tileGraphDict[playerTile]
+  const validMoves = tileGraphDict[carTile]
   if (validMoves === undefined) {
-    console.log('WARNING undefined tile in map_class.js, ' + playerTile + ', at coords: ' + tileX + ',' + tileY)
-    console.log(player.x, player.y)
+    console.log('WARNING undefined tile in map_class.js, ' + carTile + ', at coords: ' + tileX + ',' + tileY)
+    console.log(car.x, car.y)
   }
 
-  if (player.midturn === 0) {
+  if (car.midturn === 0) {
         // check to see if a turn should be initiated
-        // console.log(player.heading,player.turning);
+        // console.log(car.heading,car.turning);
         // console.log(validMoves);
 
     if (turning !== 1 && validMoves[heading][turning]) {
-            // the player wants to turn and can
-      player.midturn = turning - 1
+            // the car wants to turn and can
+      car.midturn = turning - 1
       console.log('turn initiated by press!')
     }
     if (!validMoves[heading][1]) {
-            // the player wants to go straight and can't
-      player.midturn = validMoves[heading].indexOf(1) - 1
+            // the car wants to go straight and can't
+      car.midturn = validMoves[heading].indexOf(1) - 1
       console.log('turn initiated by necessity!')
     }
   }
 
-    // set player angle for aesthetic purposes
-  player.angle = (headingToAngle[player.heading] + player.midturn * 90 * player.progress + 360) % 360
+    // set car angle for aesthetic purposes
+  car.angle = (headingToAngle[car.heading] + car.midturn * 90 * car.progress + 360) % 360
 
-    // advance the player through the section
-  player.progress += speed
+    // advance the car through the section
+  car.progress += speed
 
-  if (player.midturn === 0) {
+  if (car.midturn === 0) {
         // go straight
         // console.log("straight!");
 
-        // player.angle=headingToAngle[player.heading];
+        // car.angle=headingToAngle[car.heading];
 
-        // this causes the player to stutter when going north or west...
+        // this causes the car to stutter when going north or west...
 
-    player.x = tileX + startPoint[heading][0] + player.progress * headingsToVector[heading][0]
-    player.y = tileY + startPoint[heading][1] + player.progress * headingsToVector[heading][1]
+    car.x = tileX + startPoint[heading][0] + car.progress * headingsToVector[heading][0]
+    car.y = tileY + startPoint[heading][1] + car.progress * headingsToVector[heading][1]
 
         /*
         direction= headingsToVector[heading];
-        player.x+=direction[0]*speed;
-        player.y+=direction[1]*speed;
+        car.x+=direction[0]*speed;
+        car.y+=direction[1]*speed;
         */
   } else {
         // turn
         // console.log("turning!");
         // a turn is only 80% the length as going straight, for now we'll still make it take 100% of the time for simplicity
-    player.x = tileX + startPoint[heading][0] + player.progress * 0.5 * (headingsToVector[heading][0] + headingsToVector[(heading + player.midturn + 4) % 4][0])// the +4 is bc js modulo sucks
-    player.y = tileY + startPoint[heading][1] + player.progress * 0.5 * (headingsToVector[heading][1] + headingsToVector[(heading + player.midturn + 4) % 4][1])
+    car.x = tileX + startPoint[heading][0] + car.progress * 0.5 * (headingsToVector[heading][0] + headingsToVector[(heading + car.midturn + 4) % 4][0])// the +4 is bc js modulo sucks
+    car.y = tileY + startPoint[heading][1] + car.progress * 0.5 * (headingsToVector[heading][1] + headingsToVector[(heading + car.midturn + 4) % 4][1])
         /*
-        player.x= tileX +startPoint[heading][0] + 0.5*Math.sin((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (heading-1)*Math.PI*0.5);
-        player.y= tileY +startPoint[heading][1]+ 0.5*Math.cos((0.8/player.progress)*Math.PI*0.5*(-1)*player.midturn + (heading-1)*Math.PI*0.5);
+        car.x= tileX +startPoint[heading][0] + 0.5*Math.sin((0.8/car.progress)*Math.PI*0.5*(-1)*car.midturn + (heading-1)*Math.PI*0.5);
+        car.y= tileY +startPoint[heading][1]+ 0.5*Math.cos((0.8/car.progress)*Math.PI*0.5*(-1)*car.midturn + (heading-1)*Math.PI*0.5);
         */
   }
 
-  if (player.progress > 1) {
+  if (car.progress > 1) {
         // store info for next car and reset car state
 
-    if (player.attached_front === undefined) {
-      player.progress = 0 // TODO we should bank the extra distance right?
+    if (car.attached_front === undefined) {
+      car.progress = 0 // TODO we should bank the extra distance right?
     } else {
             // sync the car up with the rest of the train? TODO make this legit
-      player.progress = player.attached_front.progress
+      car.progress = car.attached_front.progress
     }
 
-    player.last_turn = player.midturn + 1
-    player.last_heading = player.heading
-    player.heading = (player.heading + player.midturn + 4) % 4// important to turn the train!
-    player.midturn = 0 // important to end the turn! ...... after you change the heading lol
+    car.last_turn = car.midturn + 1
+    car.last_heading = car.heading
+    car.heading = (car.heading + car.midturn + 4) % 4// important to turn the train!
+    car.midturn = 0 // important to end the turn! ...... after you change the heading lol
         // console.log("turn complete!");
-  } else if (player.midturn !== 0) {
+  } else  {
         // don't exit tile by a rounding error on a turn
-        // console.log(player.x,player.y);
+        // console.log(car.x,car.y);
 
-    player.x = Math.min(Math.max(tileX, player.x), tileX + 0.999)
-    player.y = Math.min(Math.max(tileY, player.y), tileY + 0.999)
+    car.x = Math.min(Math.max(tileX, car.x), tileX + 0.999)
+    car.y = Math.min(Math.max(tileY, car.y), tileY + 0.999)
   }
 }
 

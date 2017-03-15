@@ -75,27 +75,63 @@ Car.prototype.prep_snapshot = function () {
 
 Car.prototype.get_turn = function () {
     // get the cars action
-  if (this.attached_front === undefined || this.speed < 0) return 1 // go straight
+  if (this.attached_front === undefined ) return 1 // go straight
 
-  return this.attached_front.last_turn
+  if(this.speed < 0){
+    // follow the car attached to the back of this car
+    if(this.attached_back === undefined ){
+      return 1
+    }
+    else{
+      // go towards the car you're attached to by following their heading
+      if(this.attached_back.heading== this.heading){
+        return 1
+      }
+      else{
+        //todo verify this since I made it up with a gut feeling and it's likely wrong -a 
+        return ((3+ this.heading-this.attached_back.heading)%4)
+      }
+    }
+  }
+
+  //return this.attached_front.last_turn
+  return (3+ this.heading-this.attached_front.heading)%4
 }
 
 Car.prototype.update_position = function () {
+  //update the car's position
+
+
+  //update the car's velocity
   if (this.attached_front === undefined) {
-        // the car is unattached
-    this.speed *= 0.99
-  } else {
+    //todo make unattached cars behave well
+  }
+  else {
     this.speed = this.attached_front.speed
   }
+
+
+
+
 
   if (this.speed < 0 && !this.reversing) {
     this.reversing = 1
     this.progress = 0.99 - this.progress
+    if(this.midturn!=0){
+      //resolve the incomplete turn
+      this.heading = (this.heading + this.midturn + 4) % 4// important to turn the train!
+      this.midturn= 0
+    } 
   }
 
   if (this.speed > 0 && this.reversing) {
     this.reversing = 0
     this.progress = 0.99 - this.progress
+    if(this.midturn!=0){
+      //resolve the incomplete turn
+      this.heading = (this.heading + this.midturn + 4) % 4// important to turn the train!
+      this.midturn= 0
+    } 
   }
 
   this.game.map.move(this)
