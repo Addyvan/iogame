@@ -1,7 +1,7 @@
 const path = require('path')
 
 const config = require(path.resolve(__dirname, 'game', 'config.json'))
-const gameLoopFactory = require(path.resolve(__dirname, 'game', 'game_server_loop.js'))
+const gameLoopFactory = require(path.resolve(__dirname, 'game', 'game-loop.js'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
