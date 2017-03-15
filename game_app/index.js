@@ -1,7 +1,7 @@
 const path = require('path')
 
 const config = require(path.resolve(__dirname, 'game', 'config.json'))
-const GameLoop = require(path.resolve(__dirname, 'game', 'game_server_loop.js'))
+const gameLoopFactory = require(path.resolve(__dirname, 'game', 'game_server_loop.js'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
@@ -29,14 +29,14 @@ io.on('connection', function (socket) {
 
   socket.join('game')
 
-  socket.player = gameLoop.add_player(socket.id, socket.handshake.query)
+  socket.player = gameLoop.addPlayer(socket.id, socket.handshake.query)
 
   socket.on('a', function (movesBinary) {
     socket.player.parse(spGet.get(movesBinary))
   })
 
   socket.on('disconnect', function (reason) {
-    gameLoop.remove_player(socket.id, socket.handshake.query)
+    gameLoop.removePlayer(socket.id, socket.handshake.query)
   })
 
   socket.emit('playerID', {id: socket.id})
@@ -44,9 +44,9 @@ io.on('connection', function (socket) {
 
 function broadcast () {
   // TODO improve general efficiency
-  if (!gameLoop.snapshot) return
+  if (!gameLoop.snapshot()) return
 
-  const binarySnapshot = spSet.set(gameLoop.snapshot)
+  const binarySnapshot = spSet.set(gameLoop.snapshot())
 
   io.in('game').emit('s', binarySnapshot)
 }
@@ -54,7 +54,8 @@ function broadcast () {
 io.listen(config.port)
 console.log('listening on port ' + config.port)
 
-const gameLoop = new GameLoop()
+const gameLoop = gameLoopFactory()
+gameLoop.map.load('map.json')
 gameLoop.start()
 
 setInterval(broadcast, 1000 / 20)
