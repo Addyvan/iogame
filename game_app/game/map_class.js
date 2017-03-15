@@ -14,6 +14,7 @@
     TODO:
         -add spawns layer
         -should maybe be more robust
+        -implement a quadtree to handle collision detection and how to send info to clients?
 
 */
 
@@ -25,8 +26,9 @@ function Gmap () {
   this.data = undefined
   this.height = undefined
   this.width = undefined
-
   this.spawns = undefined // TODO
+
+  this.objects= undefined // TODO make a quadtree of map objects
 }
 
 // public variables
@@ -219,5 +221,12 @@ Gmap.prototype.move = function (car) {
     car.y = Math.min(Math.max(tileY, car.y), tileY + 0.999)
   }
 }
+
+Gmap.prototype.detectCollisions = function (x,y,w,h) {
+  //iterate over map objects to determine whether the box bounded by (x,y) (x+w,y+h) intersects with any game objects whose references are stored in this.objects
+  // a map object might be a train car or a building, for now bullets don't collide with eachother so that should help limit the computations?
+}
+
+
 
 module.exports = Gmap
