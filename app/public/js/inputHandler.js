@@ -29,6 +29,7 @@ InputHandlerClass = Class.extend({
     inputHandler.bind(65, 'left')
     inputHandler.bind(83, 'down')
     inputHandler.bind(68, 'right')
+    inputHandler.bind("click", 'click') // figure out if theres a better way to do this
   },
 
   activate: function (on = true) {
@@ -37,10 +38,16 @@ InputHandlerClass = Class.extend({
       console.log('input handler active')
       document.addEventListener('keydown', inputHandler.onKeyDown)
       document.addEventListener('keyup', inputHandler.onKeyUp)
+      document.addEventListener('mousedown', inputHandler.onMouseDown)
+      document.addEventListener('mouseup', inputHandler.onMouseUp)
+      document.addEventListener('mousemove', inputHandler.onMouseMove)
     } else {
       console.log('input handler inactive')
       document.removeEventListener('keydown', inputHandler.onKeyDown)
       document.removeEventListener('keyup', inputHandler.onKeyUp)
+      document.removeEventListener('mousedown', inputHandler.onMouseDown)
+      document.removeEventListener('mouseup', inputHandler.onMouseUp)
+      document.removeEventListener('mousemove', inputHandler.onMouseMove)
     }
   },
     // -----------------------------
@@ -67,6 +74,26 @@ InputHandlerClass = Class.extend({
     }
   },
 
+  onMouseDown: function(event){
+    var action = inputHandler.bindings['click']
+    if (action) {
+      inputHandler.actions[action] = 1
+    }
+  },
+
+  onMouseUp: function(event){
+    var action = inputHandler.bindings['click']
+    if (action) {
+      inputHandler.actions[action] = 0
+    }
+  },
+
+  onMouseMove : function(event){
+    game_coords= screen_coords_to_game(event.clientX,event.clientY);
+    inputHandler.mouse.x=game_coords[0]
+    inputHandler.mouse.y=game_coords[1]
+  },
+
   bind: function (key, action) {
         // bind a key to an action
     inputHandler.bindings[key] = action
@@ -76,14 +103,19 @@ InputHandlerClass = Class.extend({
   send: function () {
         // convert inputs to a list of 0s and 1s to save bandwidth
         // todo: just do it this way to begin...
-    input_list = []
+    inputs = {actions:[], 
+            mouse:undefined};
+
     for (var i = 0; i < INPUT_ORDER.length; i++) {
-      input_list.push(inputHandler.actions[INPUT_ORDER[i]])
+      inputs.actions.push(inputHandler.actions[INPUT_ORDER[i]])
     }
-    binary_input_list = set(input_list)
-        // console.log(input_list);
+
+    inputs.mouse=inputHandler.mouse;
+    //console.log(inputs.mouse);
+    binary_inputs = set(inputs)
+    //console.log(inputs);
         // console.log(binary_input_list);
-    socket.emit('a', binary_input_list)
+    socket.emit('a', binary_inputs)
   }
 
 })

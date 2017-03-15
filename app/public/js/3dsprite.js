@@ -13,6 +13,10 @@ load_ugly_sprite = function () {
   window.ugly_car_img = new Image()
   ugly_car_img.onload = function () { UGLY_LOADED += 1 }
   ugly_car_img.src = '/assets/' + 'uglycar.png'
+
+  window.ugly_gun_img = new Image()
+  ugly_gun_img.onload = function () { UGLY_LOADED += 1 }
+  ugly_gun_img.src = '/assets/' + 'uglygun.png'
 }
 
 draw_ugly_trains = function (ctx, snapshot) {
@@ -33,6 +37,9 @@ draw_ugly_trains = function (ctx, snapshot) {
       } else if (snapshot.players[i].cars[j].type == 1) {
         car_img = ugly_train_img
       }
+      else if (snapshot.players[i].cars[j].type == 2) {
+        car_img = ugly_gun_img
+      }
       draw_3d(ctx, car_img, car_px, car_py, snapshot.players[i].cars[j].angle)
     }
   }
@@ -43,7 +50,7 @@ draw_ugly_trains = function (ctx, snapshot) {
 
 draw_3d = function (ctx, image, px, py, angle) {
     // we save the context settings, apply rotation, draw then revert the transformations so that the next draw is normal
-  if (UGLY_LOADED < 2) return
+  if (UGLY_LOADED < 3) return
   ctx.save()
   ctx.translate((px) * SPRITE_SCALE, (py) * SPRITE_SCALE)
   ctx.rotate(angle * Math.PI / 180)

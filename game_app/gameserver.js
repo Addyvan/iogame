@@ -41,7 +41,7 @@ io.on('connection', function (socket) {
         // receive key inputs from the player
         // console.log(movesBinary);
     const moves = spGet.get(movesBinary)
-        // console.log(moves);
+    //console.log(moves);
     socket.player.parse(moves)
   })
   socket.on('disconnect', function (reason) {

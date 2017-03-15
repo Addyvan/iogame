@@ -29,8 +29,11 @@ function Player (args) {
   this.actions={left:0,
                 right:0,
                 up:0,
-                down:0
+                down:0,
+                clicking:0
               }
+  this.mouse={x:0,
+              y:0}
 
   this.team = undefined
     // state
@@ -94,11 +97,14 @@ Player.prototype.parse = function (inputs) {
     // parse player inputs
     // todo make this take into context the trains orientation so that controls are properly mapped
     // todo move this to the engine class when it is fixed up
-  this.actions.up= inputs[0]
-  this.actions.down= inputs[1]
-  this.actions.left= inputs[2]
-  this.actions.right= inputs[3]
+  this.actions.up= inputs.actions[0]
+  this.actions.down= inputs.actions[1]
+  this.actions.left= inputs.actions[2]
+  this.actions.right= inputs.actions[3]
+  this.actions.clicking= inputs.actions[4]
 
+  this.mouse.x = inputs.mouse.x
+  this.mouse.y = inputs.mouse.y
   /*
   if (inputs[0]) { // up
     this.engine.accelerating = 1

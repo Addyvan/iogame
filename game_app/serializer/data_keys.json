@@ -1,7 +1,13 @@
-[
-    "length 4",
-    "int 0 1",
-    "int 0 1",
-    "int 0 1",
-    "int 0 1"
-]
+{
+    actions: [ "length 5",
+                    "int 0 1",
+                    "int 0 1",
+                    "int 0 1",
+                    "int 0 1",
+                    "int 0 1",
+                    ],
+    mouse:{
+            x:"int 0 65025",
+            y:"int 0 65025"
+    }
+}

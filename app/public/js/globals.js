@@ -27,7 +27,8 @@ INPUT_ORDER = [
   'up',
   'down',
   'left',
-  'right'
+  'right',
+  'click'
 ]
 
 // client info
