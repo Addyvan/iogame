@@ -13,11 +13,17 @@ const util = require('util')
 
 // Constructor
 function GunCar (args = {}) {
+  Car.apply(this, args)
 
+  this.type = 2 // 2 for gun car
+  this.hp = 100 // todo put this in a config file
 }
 
 
 //class methods
+Engine.prototype.shoot = function(){
+
+}
 
 
 
