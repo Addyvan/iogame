@@ -3,7 +3,9 @@
     "version": "0.0.0",
     "description": "train io game prototype",
     "scripts": {
-        "lint": "standard | snazzy"
+        "lint": "standard | snazzy",
+        "game": "node game_app",
+        "web": "node app"
     },
     "dependencies": {
         "express": "latest",

@@ -75,7 +75,7 @@ Player.prototype.spawn = function () {
   this.dead = 0
   this.engine = new Engine({player: this})
 
-  this.game.map.spawn_location(this.engine)
+  this.game.map.spawnLocation(this.engine)
 
   var CAR_ARR = new Array(this.engine)
 
