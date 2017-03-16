@@ -1,6 +1,6 @@
 const path = require('path')
 
-const gameMapFactory = require(path.resolve(__dirname, 'map_class'))
+const gameMapFactory = require(path.resolve(__dirname, 'game-map'))
 const Player = require(path.resolve(__dirname, 'player_class'))
 
 function step () {
