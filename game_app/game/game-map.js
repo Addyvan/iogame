@@ -28,7 +28,7 @@ const headingToAngle = require(path.resolve(__dirname, '../enums/heading-to-angl
 function load (mapJsonName) {
   // load and parse a mapJson file
   this.map_name = mapJsonName
-  const mapJson = require(path.resolve(__dirname, '..', 'maps', mapJsonName))
+  const mapJson = require(path.resolve(__dirname, '../maps', mapJsonName))
   this.width = mapJson.width
   this.height = mapJson.height
 

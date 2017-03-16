@@ -9,11 +9,13 @@
     },
     "dependencies": {
         "express": "latest",
+        "lodash": "^4.17.4",
         "pug": "latest",
         "socket.io": "latest"
     },
     "author": "developer",
     "devDependencies": {
+        "jest": "^19.0.2",
         "snazzy": "^6.0.0",
         "standard": "^9.0.1"
     }

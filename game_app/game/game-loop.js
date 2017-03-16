@@ -1,8 +1,8 @@
 const path = require('path')
 
-const gameMapFactory = require(path.resolve(__dirname, 'game-map'))
-const Player = require(path.resolve(__dirname, 'player_class'))
-const Projectile = require(path.resolve(__dirname, 'projectile_class'))
+const gameMapFactory = require(path.resolve(__dirname, 'game-map.js'))
+const playerFactory = require(path.resolve(__dirname, 'player.js'))
+const Projectile = require(path.resolve(__dirname, 'projectile.js'))
 
 function step () {
   this.players.forEach((player) => player.tick())
@@ -31,7 +31,8 @@ function addPlayer (id, query) {
   console.log(`${query.username} is joining the game`)
 
   // CRITICAL TODO, findout whether or not this is passing a pointer or some crazy recursive copy
-  const newPlayer = new Player({ id: id, username: query.username, game: this })
+  const newPlayer = playerFactory(id, this, query.username)
+  newPlayer.spawn()
   this.players.push(newPlayer)
   return newPlayer
 }
@@ -47,17 +48,17 @@ function snapshot () {
     tick: this.tick,
     timestamp: this.timestamp,
     id: 'todo',
-    players: this.players.map((player) => player.snapshot_data)
+    players: this.players.map((player) => player.snapshot())
   }
 }
 
 function getEvents () {
-  //send out the new events 
+  // send out the new events
   return this.events
 }
-function clearEvents(){
+function clearEvents () {
   // clear the events
-  this.events={shots:[]}
+  this.events = {shots: []}
 }
 
 function gameLoopFactory () {
@@ -65,7 +66,7 @@ function gameLoopFactory () {
     tick: 0,
     players: [],
     projectiles: [],
-    events:{shots:[]},
+    events: {shots: []},
     map: gameMapFactory(),
     step,
     start,
@@ -74,7 +75,7 @@ function gameLoopFactory () {
     snapshot,
     getEvents,
     clearEvents
-    
+
   }
 }
 

@@ -1,13 +1,13 @@
 const path = require('path')
 
-const config = require(path.resolve(__dirname, 'game', 'config.json'))
-const gameLoopFactory = require(path.resolve(__dirname, 'game', 'game-loop.js'))
+const config = require(path.resolve(__dirname, 'config.json'))
+const gameLoopFactory = require(path.resolve(__dirname, 'game/game-loop.js'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
 // At the moment the code generator is buggy but it's fixable.
-const spSet = require(path.resolve(__dirname, 'game', 'setNodeJS.js'))
-const spGet = require(path.resolve(__dirname, 'game', 'getNodeJS.js'))
+const spSet = require(path.resolve(__dirname, 'game/set-node-js.js'))
+const spGet = require(path.resolve(__dirname, 'game', 'get-node-js.js'))
 
 const io = require('socket.io')()
 
@@ -49,7 +49,7 @@ function broadcast () {
   const binarySnapshot = spSet.setSnapshot(gameLoop.snapshot())
   const binaryEvents = spSet.setEvent(gameLoop.getEvents())
   gameLoop.clearEvents()
-  
+
   io.in('game').emit('s', binarySnapshot)
   io.in('game').emit('e', binaryEvents)
 }
