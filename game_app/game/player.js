@@ -42,8 +42,7 @@ function spawn () {
   console.log('spawning!')
     // console.log(this);
   this.dead = 0
-  this.engine = engineFactory(this)
-
+  this.engine = engineFactory({player:this})
   this.game.map.spawnLocation(this.engine)
 
   var CAR_ARR = new Array(this.engine)

@@ -11,7 +11,7 @@ const carFactory = require(path.resolve(__dirname, 'car.js'))
 
 function tick () {
   // todo make the inputs condtion on heading
-
+  console.log(this.player.actions)
   if (this.player.actions.up) { // up
     this.accelerating = 1
   } else if (this.player.actions.down) { // down
@@ -64,10 +64,13 @@ function getTurn () {
   return this.turning
 }
 
-function engineFactory (player) {
-  return _.merge({}, carFactory(), {
-    player,
-    game: player.game,
+
+
+
+function engineFactory (args) {
+  return _.assign({}, carFactory(), {
+    player:args.player,
+    game: args.player.game,
     type: 1,
     hp: 100,
     turning: 1,
