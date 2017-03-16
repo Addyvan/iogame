@@ -46,9 +46,12 @@ function broadcast () {
   // TODO improve general efficiency
   if (!gameLoop.snapshot()) return
 
-  const binarySnapshot = spSet.set(gameLoop.snapshot())
-
+  const binarySnapshot = spSet.setSnapshot(gameLoop.snapshot())
+  const binaryEvents = spSet.setEvent(gameLoop.getEvents())
+  gameLoop.clearEvents()
+  
   io.in('game').emit('s', binarySnapshot)
+  io.in('game').emit('e', binaryEvents)
 }
 
 io.listen(config.port)

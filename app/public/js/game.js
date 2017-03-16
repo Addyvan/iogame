@@ -16,14 +16,14 @@ game_init = function () {
   }
 
   window.SNAP_BUFFER = []
-
+  window.PROJECTILES= []
   GAME_INITIALIZED = 1
 }
 
 parse_snapshot = function (data) {
     // parse the snapshot and put it into the snapshot buffer
     // console.log("parsing snapshot!");
-  decoded = get(data)
+  decoded = getSnapshot(data)
     // console.log(data);
     // console.log(decoded);
   SNAP_BUFFER.unshift(decoded) // unshift prepends the value to the front of the list
@@ -31,6 +31,15 @@ parse_snapshot = function (data) {
     // remove the last value if the buffer is sufficiently long
     // TODO would it be worth it to start the buffer with 0s instead of checking length or does it really not make a big diff?
   if (SNAP_BUFFER.length > BUFFER_LENGTH) SNAP_BUFFER.splice(-1, 1)
+}
+
+parse_events = function(events){
+  // parse the various events, event can't be skipped
+  parsedEvents= getEvents(events)
+  for(var i =0, len= parsedEvents.shots.length; i<len;i++){
+    //console.log(parsedEvents.shots[i]);
+    PROJECTILES.push(parsedEvents.shots[i]);
+  }
 }
 
 window.requestAnimId = 0
@@ -52,20 +61,22 @@ game_loop = function () {
 
   interpolate(client_time, interpolated_snap)
 
-  draw_screen(interpolated_snap)
+  draw_screen(interpolated_snap,client_time)
 
     // send key inputs to the server
   inputHandler.send()
 }
 
-draw_screen = function (snapshot) {
+draw_screen = function (snapshot,client_time) {
     // all actual painting to canvas should be called from this function
     // console.log(snapshot);
   setCameraPosition(snapshot)
 
   ctx = fgCanvas.getContext('2d')
   ctx.clearRect(0, 0, fgCanvas.width, fgCanvas.height)
+  
   draw_ugly_trains(ctx, snapshot)
+  draw_projectiles(ctx,client_time)
   draw_map()
 }
 
@@ -74,6 +85,36 @@ draw_map = function () {
     // TODO: increase efficiency by pre rendering a slightly larger map and translating it instead of redrawing each frame
   ctx = bgCanvas.getContext('2d')
   gMap.draw(ctx)
+}
+
+draw_projectiles = function(ctx,client_time){
+  //for now these are drawn on the same canvas as the trains
+  for(var i=PROJECTILES.length -1 ; i>=0 ; i--){
+    // loop in reverse since we will delete items from the list
+    console.log()
+    if(PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp )/1000 > PROJECTILES[i].range){
+      //the projectile has expired so remove it from the list
+      PROJECTILES.splice(i, 1);
+      console.log("pew pew expired")
+    }else{
+      //figure out where to draw the bullet
+      x= PROJECTILES[i].x + PROJECTILES[i].dir.x * PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp )/1000
+      y= PROJECTILES[i].y + PROJECTILES[i].dir.y * PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp)/1000
+      draw_bullet(ctx,x,y)
+    }
+    
+  }
+
+}
+
+draw_bullet = function(ctx,x,y){
+  console.log("draw pew pew at", x, y);
+
+  screenCoords= game_coords_to_screen(x,y)
+  ctx.fillStyle="#FF0000";
+  console.log("draw pew pew at screen", screenCoords[0], screenCoords[1]);
+  ctx.fillRect(screenCoords[0]-1 ,screenCoords[1]-1,3,3);
+  ctx.stroke();
 }
 
 window.onresize = resize = function () {

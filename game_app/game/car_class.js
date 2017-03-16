@@ -46,6 +46,15 @@ var headingsToVector = {
 }
 
 // class methods
+Car.prototype.tick = function(){
+  // base cars don't do anything but others might
+  //this is not where movement is resolved this is for shooting and stuff
+
+  if (this.attached_back) {
+    this.attached_back.tick()
+  }
+}
+
 
 Car.prototype.prep_snapshot = function () {
     // http://stackoverflow.com/questions/16880418/javascript-pass-object-as-reference

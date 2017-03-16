@@ -1,0 +1,15 @@
+
+{
+    shots:[
+        {
+            timestamp: "int 0 86400000",
+            x: "int 0 65000",
+            y: "int 0 65000",
+            dir:{ x: "int -200 200",
+                    y: "int -200 200"},
+            speed: "int 0 255",
+            range: "int 0 255",
+            id: "string"
+        }
+    ]
+}

@@ -12,6 +12,7 @@ const path = require('path')
 
 const Engine = require(path.resolve(__dirname, 'engine_class'))
 const Car = require(path.resolve(__dirname, 'car_class'))
+const GunCar = require(path.resolve(__dirname, 'gun_car_class'))
 
 // Constructor
 function Player (args) {
@@ -79,7 +80,12 @@ Player.prototype.spawn = function () {
   var CAR_ARR = new Array(this.engine)
 
   for (var x = 1; x < initNumCars; x++) {
-    CAR_ARR.push(new Car())
+    if (x%3==0){
+      CAR_ARR.push(new GunCar())
+    }else{
+      CAR_ARR.push(new Car())
+    }
+    
     CAR_ARR[x].attach(CAR_ARR[x - 1])
   }
 }
@@ -103,8 +109,8 @@ Player.prototype.parse = function (inputs) {
   this.actions.right= inputs.actions[3]
   this.actions.clicking= inputs.actions[4]
 
-  this.mouse.x = inputs.mouse.x
-  this.mouse.y = inputs.mouse.y
+  this.mouse.x = inputs.mouse.x/100
+  this.mouse.y = inputs.mouse.y/100
   /*
   if (inputs[0]) { // up
     this.engine.accelerating = 1

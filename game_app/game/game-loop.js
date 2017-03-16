@@ -2,9 +2,12 @@ const path = require('path')
 
 const Gmap = require(path.resolve(__dirname, 'map_class'))
 const Player = require(path.resolve(__dirname, 'player_class'))
+const Projectile = require(path.resolve(__dirname, 'projectile_class'))
 
 function step () {
   this.players.forEach((player) => player.tick())
+
+  this.projectiles.forEach((projectile) => projectile.tick())
 
   // increment the game tick and set the timestamp
   this.tick = (this.tick + 1) % 100000
@@ -48,16 +51,30 @@ function snapshot () {
   }
 }
 
+function getEvents () {
+  //send out the new events 
+  return this.events
+}
+function clearEvents(){
+  // clear the events
+  this.events={shots:[]}
+}
+
 function gameLoopFactory () {
   return {
     tick: 0,
     players: [],
     map: new Gmap(),
+    projectiles: [],
+    events:{shots:[]},
     step,
     start,
     addPlayer,
     removePlayer,
-    snapshot
+    snapshot,
+    getEvents,
+    clearEvents
+    
   }
 }
 

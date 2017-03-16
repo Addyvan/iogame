@@ -88,6 +88,11 @@ Engine.prototype.tick = function(){
     this.speed= Math.abs(this.speed)/this.speed *10/60
   }
   
+  if (this.attached_back) {
+    //should we run the ticks before movement? not sure it matters
+    this.attached_back.tick()
+  }
+
   this.update_position()
 }
 

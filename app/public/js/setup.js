@@ -53,5 +53,8 @@ connect_to_socket = function (type = 'player') {
 
     // on snapshot
   socket.on('s', parse_snapshot)
+
+  //on events
+  socket.on('e', parse_events)
 }
 
