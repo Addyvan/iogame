@@ -1,6 +1,6 @@
 const path = require('path')
 
-const Gmap = require(path.resolve(__dirname, 'map_class'))
+const gameMapFactory = require(path.resolve(__dirname, 'game-map'))
 const Player = require(path.resolve(__dirname, 'player_class'))
 
 function step () {
@@ -52,7 +52,7 @@ function gameLoopFactory () {
   return {
     tick: 0,
     players: [],
-    map: new Gmap(),
+    map: gameMapFactory(),
     step,
     start,
     addPlayer,
