@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "express": "latest",
+        "lodash": "^4.17.4",
         "pug": "latest",
         "socket.io": "latest"
     },
