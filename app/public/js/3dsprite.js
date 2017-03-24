@@ -53,6 +53,7 @@ draw_ugly_trains = function (ctx, snapshot) {
         if(snapshot.players[i].cars[j].damaged){car_img = dmg_ugly_gun_img}
       }
       draw_3d(ctx, car_img, car_px, car_py, snapshot.players[i].cars[j].angle)
+      draw_health_bar(ctx,snapshot.players[i].cars[j].hp, car_px, car_py)
     }
   }
 
@@ -74,4 +75,18 @@ draw_3d = function (ctx, image, px, py, angle) {
                         16 * SPRITE_SCALE, 16 * SPRITE_SCALE)
   }
   ctx.restore()
+}
+
+draw_health_bar = function(ctx , hp ,px,py){
+  // draw the background bar
+  origstyle=ctx.fillStyle
+  ctx.fillStyle="#FF0000"; //red
+  ctx.fillRect(px-RESOLUTION*0.5,py-1.25*RESOLUTION,RESOLUTION,1);
+  ctx.stroke()
+  ctx.fillStyle="#25fc25"; //green
+  //console.log(hp,Math.ceil(RESOLUTION*hp/100))
+  ctx.fillRect(px-RESOLUTION*0.5,py-1.25*RESOLUTION,Math.ceil(RESOLUTION*hp/100) ,1);
+  ctx.stroke()
+
+  ctx.strokeStyle=origstyle
 }

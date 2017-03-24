@@ -112,10 +112,12 @@ draw_bullet = function(ctx,x,y){
   //console.log("draw pew pew at", x, y);
 
   screenCoords= game_coords_to_screen(x,y)
+  //origstyle=ctx.fillStyle
   ctx.fillStyle="#FF0000";
   //console.log("draw pew pew at screen", screenCoords[0], screenCoords[1]);
   ctx.fillRect(screenCoords[0]-1 ,screenCoords[1]-1,3,3);
   ctx.stroke();
+  //ctx.fillStyle=origstyle
 }
 
 window.onresize = resize = function () {
@@ -208,6 +210,10 @@ interpolate = function (time, interpolated_snap) {
 
     for (var j = 0, len_j = Math.min(player_b.cars.length, player_a.cars.length); j < len_j; j++) {
       car = {}
+      car.hp= player_a.cars[j].hp
+      if (car.hp!= 100){
+        console.log(car.hp)
+      }
       if (player_a.cars[j].hp<player_b.cars[j].hp){
         car.damaged=1
         console.log("ouch!")
