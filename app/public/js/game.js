@@ -95,6 +95,7 @@ draw_projectiles = function(ctx,client_time){
     if(PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp )/1000 > PROJECTILES[i].range){
       //the projectile has expired so remove it from the list
       PROJECTILES.splice(i, 1);
+      //IMPORTANT TODO Delete the object!
       //console.log("pew pew expired")
     }else{
       //figure out where to draw the bullet

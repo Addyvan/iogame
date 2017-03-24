@@ -33,15 +33,21 @@ function load (mapJsonName) {
   this.height = mapJson.height
 
   this.data = mapJson.layers.find((layer) => layer.name === 'tracks').data
+  this.spawns = mapJson.layers.find((layer) => layer.name === 'spawns').objects
+  console.log(this.spawns)
 }
 
 function spawnLocation (player, team = 0) {
   // spawn the player at a spawn point according to their team
   // TODO
-  player.x = 33.5
-  player.y = 9.5
-  player.heading = 1
-  player.last_heading = 1
+
+  var spawn = this.spawns[Math.floor(Math.random()*this.spawns.length)]
+  player.x = Math.floor(spawn.x/16) +0.5
+  player.y = Math.floor(spawn.y/16) +0.5
+
+  player.heading = Number(spawn.properties.heading)
+  player.last_heading = Number(spawn.properties.heading) // is this still used?
+  console.log("spawning at:", player.x,player.y,player.heading)
 }
 
 function addCollidable (collidable){
