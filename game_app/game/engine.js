@@ -11,7 +11,7 @@ const carFactory = require(path.resolve(__dirname, 'car.js'))
 
 function tick () {
   // todo make the inputs condtion on heading
-  console.log(this.player.actions)
+  //console.log(this.player.actions)
   if (this.player.actions.up) { // up
     this.accelerating = 1
   } else if (this.player.actions.down) { // down

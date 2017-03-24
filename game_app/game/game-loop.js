@@ -43,6 +43,16 @@ function removePlayer (id) {
   })
 }
 
+function addProjectile (projectile){
+  this.projectiles.push(projectile)
+}
+
+function removeProjectile (id){
+  this.projectiles = this.projectiles.filter((projectile) => {
+    return projectile.id !== id
+  })
+}
+
 function snapshot () {
   return {
     tick: this.tick,
@@ -58,7 +68,7 @@ function getEvents () {
 }
 function clearEvents () {
   // clear the events
-  this.events = {shots: []}
+  this.events = {shots: [], crashes:[]}
 }
 
 function gameLoopFactory () {
@@ -66,12 +76,14 @@ function gameLoopFactory () {
     tick: 0,
     players: [],
     projectiles: [],
-    events: {shots: []},
+    events: {shots: [], crashes:[]},
     map: gameMapFactory(),
     step,
     start,
     addPlayer,
     removePlayer,
+    addProjectile,
+    removeProjectile,
     snapshot,
     getEvents,
     clearEvents

@@ -32,6 +32,7 @@ function tick () {
 
 function snapshot () {
   return {
+    hp:this.hp,
     x: this.x * 100,
     y: this.y * 100,
     angle: this.angle,
@@ -74,7 +75,7 @@ function updatePosition () {
 
   if (this.speed < 0 && !this.reversing) {
     this.reversing = 1
-    this.progress = 0.99 - this.progress
+    this.progress = 0.99 - this.progress //todo figure out how robust this is
     if (this.midturn !== 0) {
       // resolve the incomplete turn
       this.heading = (this.heading + this.midturn + 4) % 4// important to turn the train!
@@ -118,6 +119,21 @@ function attach (target) {
   this.player = target.player
 
   this.player.cars.push(this)
+  this.player.game.map.addCollidable(this) //todo put thsi is a better spot
+}
+
+function takeDamage(damage){
+  this.hp -= damage
+  console.log("ouch that hurt!")
+  console.log("HP: ", this.hp)
+  if(this.hp<0){
+    this.die()
+  }
+}
+
+function die(){
+  // the car is dead
+  console.log("I died :(((((")
 }
 
 function carFactory () {
@@ -129,6 +145,9 @@ function carFactory () {
     progress: 0,
     speed: 0,
     reversing: 0,
+    hp:100, //todo put in config file
+    takeDamage,
+    die,
     tick,
     snapshot,
     getTurn,

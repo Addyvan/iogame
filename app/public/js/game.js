@@ -95,7 +95,7 @@ draw_projectiles = function(ctx,client_time){
     if(PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp )/1000 > PROJECTILES[i].range){
       //the projectile has expired so remove it from the list
       PROJECTILES.splice(i, 1);
-      console.log("pew pew expired")
+      //console.log("pew pew expired")
     }else{
       //figure out where to draw the bullet
       x= PROJECTILES[i].x + PROJECTILES[i].dir.x * PROJECTILES[i].speed* (client_time-PROJECTILES[i].timestamp )/1000
@@ -108,11 +108,11 @@ draw_projectiles = function(ctx,client_time){
 }
 
 draw_bullet = function(ctx,x,y){
-  console.log("draw pew pew at", x, y);
+  //console.log("draw pew pew at", x, y);
 
   screenCoords= game_coords_to_screen(x,y)
   ctx.fillStyle="#FF0000";
-  console.log("draw pew pew at screen", screenCoords[0], screenCoords[1]);
+  //console.log("draw pew pew at screen", screenCoords[0], screenCoords[1]);
   ctx.fillRect(screenCoords[0]-1 ,screenCoords[1]-1,3,3);
   ctx.stroke();
 }
@@ -207,6 +207,12 @@ interpolate = function (time, interpolated_snap) {
 
     for (var j = 0, len_j = Math.min(player_b.cars.length, player_a.cars.length); j < len_j; j++) {
       car = {}
+      if (player_a.cars[j].hp<player_b.cars[j].hp){
+        car.damaged=1
+        console.log("ouch!")
+      }else{
+        car.damaged=0
+      }
       interpolate_coords(car, player_a.cars[j], player_b.cars[j], weight_a, weight_b)
       car.type = player_b.cars[j].type
       player.cars.push(car)

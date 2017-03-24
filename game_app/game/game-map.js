@@ -44,6 +44,18 @@ function spawnLocation (player, team = 0) {
   player.last_heading = 1
 }
 
+function addCollidable (collidable){
+  // add an object to the list of things that can be collided with 
+  this.collidables.push(collidable)
+}
+
+function removeCollidable (collidable){
+  // remove an object to the list of things that can be collided with 
+  this.collidables = this.collidables.filter((c) => {
+    return c != collidable
+  })
+}
+
 function move (car) {
   // keep the player in bounds
   if (car.x < 0) {
@@ -116,7 +128,7 @@ function move (car) {
     // store info for next car and reset car state
 
     if (!car.attached_front) {
-      car.progress = 0 // TODO we should bank the extra distance right?
+      car.progress = car.progress%1 // TODO we should bank the extra distance right?
     } else {
       // sync the car up with the rest of the train? TODO make this legit
       car.progress = car.attached_front.progress
@@ -136,14 +148,35 @@ function move (car) {
 function detectCollisions (x, y, w, h) {
   // iterate over map objects to determine whether the box bounded by (x,y) (x+w,y+h) intersects with any game objects whose references are stored in this.objects
   // a map object might be a train car or a building, for now bullets don't collide with eachother so that should help limit the computations?
+  // this is a temporary solution so that I can go forward with other parts of the game - andrew
+  // note that the forEach loop is the wrong tool for this job 
+  //http://stackoverflow.com/questions/34653612/what-does-return-keyword-mean-inside-foreach-function/34653650
+
+  for(let i =0, len= this.collidables.length; i<len; i++){
+    if(this.checkCollision(this.collidables[i],x,y,w,h)){
+      return this.collidables[i] // this exits the loop right?
+    }
+  }
+}
+
+function checkCollision(collidable,x,y,w,h){
+  // todo atm assume width and height of cars is 1 and the object is a point mass
+  if(collidable.x < x && x <collidable.x+1 && collidable.y < y&& y <collidable.y+1){
+    //console.log(collidable.x,x,collidable.y,y)
+    return true
+  }
 }
 
 function gameMapFactory () {
   return {
+    collidables:[],
+    addCollidable,
+    removeCollidable,
     load,
     spawnLocation,
     move,
-    detectCollisions
+    detectCollisions,
+    checkCollision
   }
 }
 

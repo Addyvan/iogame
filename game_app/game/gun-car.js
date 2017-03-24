@@ -34,11 +34,11 @@ function shoot () {
     }
     const dir = {x: 0, y: 0}
         // todo this formula is wrong
-    console.log(this.player.mouse.x, this.x)
+    //console.log(this.player.mouse.x, this.x)
     dir.x = (this.player.mouse.x - this.x) / (Math.abs(this.player.mouse.x - this.x) + Math.abs(this.player.mouse.y - this.y))
     dir.y = (this.player.mouse.y - this.y) / (Math.abs(this.player.mouse.x - this.x) + Math.abs(this.player.mouse.y - this.y))
     args.dir = dir
-    console.log(dir)
+    //console.log(dir)
     const test = new Projectile(args)
     this.reload = 30
   }

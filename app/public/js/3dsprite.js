@@ -7,15 +7,24 @@ UGLY_LOADED = 0
 
 load_ugly_sprite = function () {
   window.ugly_train_img = new Image()
-  ugly_train_img.onload = function () { UGLY_LOADED += 1 }
+  ugly_train_img.onload = function () { 
+    UGLY_LOADED += 1 
+    window.dmg_ugly_train_img= imgdye(ugly_train_img, '#ff0000', 0.7)
+  }
   ugly_train_img.src = '/assets/' + 'uglytrain.png'
 
   window.ugly_car_img = new Image()
-  ugly_car_img.onload = function () { UGLY_LOADED += 1 }
+  ugly_car_img.onload = function () { 
+    UGLY_LOADED += 1 
+    window.dmg_ugly_car_img= imgdye(ugly_car_img, '#ff0000', 0.7)
+  }
   ugly_car_img.src = '/assets/' + 'uglycar.png'
 
   window.ugly_gun_img = new Image()
-  ugly_gun_img.onload = function () { UGLY_LOADED += 1 }
+  ugly_gun_img.onload = function () { 
+    UGLY_LOADED += 1 
+    window.dmg_ugly_gun_img= imgdye(ugly_gun_img, '#ff0000', 0.7)
+  }
   ugly_gun_img.src = '/assets/' + 'uglygun.png'
 }
 
@@ -34,11 +43,14 @@ draw_ugly_trains = function (ctx, snapshot) {
       if (snapshot.players[i].cars[j].type == 0) {
                 // todo this should be some kind of atlas
         car_img = ugly_car_img
+        if(snapshot.players[i].cars[j].damaged){car_img = dmg_ugly_car_img}
       } else if (snapshot.players[i].cars[j].type == 1) {
         car_img = ugly_train_img
+        if(snapshot.players[i].cars[j].damaged){car_img = dmg_ugly_train_img}
       }
       else if (snapshot.players[i].cars[j].type == 2) {
         car_img = ugly_gun_img
+        if(snapshot.players[i].cars[j].damaged){car_img = dmg_ugly_gun_img}
       }
       draw_3d(ctx, car_img, car_px, car_py, snapshot.players[i].cars[j].angle)
     }

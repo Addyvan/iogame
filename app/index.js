@@ -3,6 +3,7 @@ const path = require('path')
 const app = express()
 const port = 3700
 
+
 // tell express where to find templates
 app.set('views', path.resolve(__dirname, 'views'))
 // tell express where to find files

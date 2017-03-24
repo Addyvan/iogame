@@ -14,14 +14,15 @@ function Projectile (args = {}) {
   this.dir = args.dir
   this.speed = args.speed // should just be normal ints
   this.range = args.range // should just be normal ints
+  this.damage= 2
   this.player = args.player
   this.game = this.player.game
   this.dist = 0
 
-  this.id = this.player.id + this.game.tick // unique bullet identifier todo find a more complicated way to get shorter IDs
+  this.id = this.player.id + this.game.tick +this.x+this.y// unique bullet identifier todo find a more complicated way to get shorter IDs
 
     // add the projectile to the list of projectiles
-  this.game.projectiles.push(this)
+  this.game.addProjectile(this)
   event_data = {
     timestamp: this.game.timestamp,
     x: Math.floor(this.x * 100),
@@ -48,7 +49,29 @@ Projectile.prototype.tick = function () {
     return
   } else {
     // check for collision
+    collided= this.game.map.detectCollisions(this.x,this.y,1,1) //todo h and w
+
+    if (collided!=undefined){
+      if(collided.player != this.player){
+        //you can't shoot yourself lol
+        collided.takeDamage(this.damage)
+        this.crash()
+      }
+      
+
+    }
   }
+}
+Projectile.prototype.crash = function(){
+  //remove the bullet so that it doesn't apply damage repeatedly
+  
+  this.game.removeProjectile(this.id)
+  event_data = {
+    timestamp: this.game.timestamp,
+    id: this.id
+  }
+  //todo remove it from the screen by sending event
+  delete this // todo check if this is legit?
 }
 
 Projectile.prototype.expire = function () {

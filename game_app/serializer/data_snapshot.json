@@ -8,6 +8,7 @@
              id: "string",
              cars: [
                     {
+                    hp: "int 0 255",
                     type: "int 0 8",
                     x: "int 0 10000",
                     y: "int 0 10000",

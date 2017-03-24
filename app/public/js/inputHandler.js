@@ -89,9 +89,8 @@ InputHandlerClass = Class.extend({
   },
 
   onMouseMove : function(event){
-    game_coords= screen_coords_to_game(event.clientX,event.clientY);
-    inputHandler.mouse.x=game_coords[0]
-    inputHandler.mouse.y=game_coords[1]
+    inputHandler.mouse.x=event.clientX
+    inputHandler.mouse.y=event.clientY
   },
 
   bind: function (key, action) {
@@ -104,13 +103,16 @@ InputHandlerClass = Class.extend({
         // convert inputs to a list of 0s and 1s to save bandwidth
         // todo: just do it this way to begin...
     inputs = {actions:[], 
-            mouse:undefined};
+            mouse:{x:undefined,y:undefined}};
 
     for (var i = 0; i < INPUT_ORDER.length; i++) {
       inputs.actions.push(inputHandler.actions[INPUT_ORDER[i]])
     }
+    // do the mouse coord here to avoid issues with scrolling camera and stationary mouse
+    game_coords= screen_coords_to_game(inputHandler.mouse.x,inputHandler.mouse.y);
+    inputs.mouse.x=game_coords[0]
+    inputs.mouse.y=game_coords[1]
 
-    inputs.mouse=inputHandler.mouse;
     //console.log(inputs.mouse);
     binary_inputs = set(inputs)
     //console.log(inputs);
