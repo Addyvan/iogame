@@ -79,6 +79,16 @@ function RIP () {
     // TODO
 
     // remove all cars
+    console.log("player has died! :((((")
+    current_car = this.engine
+
+    while( current_car != undefined){
+      next_car=current_car.attached_back
+      this.game.map.removeCollidable(current_car)
+      delete current_car
+      current_car= next_car
+    }
+    this.spawn()
 
 }
 

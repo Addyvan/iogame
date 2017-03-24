@@ -124,8 +124,6 @@ function attach (target) {
 
 function takeDamage(damage){
   this.hp -= damage
-  console.log("ouch that hurt!")
-  console.log("HP: ", this.hp)
   if(this.hp<=0){
     this.hp=0
     this.die()
@@ -136,6 +134,7 @@ function die(){
   // the car is dead
   // todo
   console.log("I died :(((((")
+  this.player.RIP() //todo atm one car dieing kills the player
 }
 
 function carFactory () {
