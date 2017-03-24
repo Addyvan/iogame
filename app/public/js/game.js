@@ -211,9 +211,6 @@ interpolate = function (time, interpolated_snap) {
     for (var j = 0, len_j = Math.min(player_b.cars.length, player_a.cars.length); j < len_j; j++) {
       car = {}
       car.hp= player_a.cars[j].hp
-      if (car.hp!= 100){
-        console.log(car.hp)
-      }
       if (player_a.cars[j].hp<player_b.cars[j].hp){
         car.damaged=1
         console.log("ouch!")

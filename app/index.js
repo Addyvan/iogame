@@ -15,7 +15,8 @@ app.engine('pug', require('pug').__express)
 
 // tell express what page to render when people go to our base page
 app.get('/', function (req, res) {
-  res.render('game')
+  //res.render('base')
+  res.render('test-game')
 })
 
 // Handle 404 - Keep this as a last route
