@@ -21,6 +21,7 @@ game_init = function () {
 }
 
 parse_snapshot = function (data) {
+  if(!GAME_INITIALIZED)game_init()
     // parse the snapshot and put it into the snapshot buffer
     // console.log("parsing snapshot!");
   decoded = getSnapshot(data)
@@ -45,6 +46,7 @@ parse_events = function(events){
 window.requestAnimId = 0
 window.GAME_LOOP_COUNTER = 0// so that we don't print to console like nuts
 game_loop = function () {
+  console.log("test")
     // The game loop is called every time the browser refreshes the screen,
     // this method is efficent since it won't be called when the tab is not in focus
     // and it syncs with screen paint actions so that the scene is rendered halfway through our updates

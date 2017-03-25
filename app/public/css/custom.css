@@ -7,6 +7,16 @@
   display: inline-block;
 }
 
+#menu-wrapper{
+  background-image:  url("background.svg");
+  background-size: 100% 100%; 
+  /*http://stackoverflow.com/questions/1150163/stretch-and-scale-a-css-image-in-the-background-with-css-only*/
+  background-position:center; 
+  background-repeat: no-repeat;
+  height:100%;
+}
+
+
 #menu {
     padding-top: 5%;
 }
@@ -36,4 +46,22 @@ canvas{
 body{
   /*TODO find a good crosshair for the cursor */
   cursor: url(http://www.rw-designer.com/cursor-extern.php?id=30925),auto;
+
+  /* to hide scroll bars*/
+  overflow: hidden;
+}
+
+
+#leaderboard-div ,#chat-div{
+  color: black;
+  font-size: 2 em;
+  font-weight: bold;
+  background-color:rgba(255, 255, 255, 0.35);
+
+  padding-right:4;
+  padding-left:4;
+}
+
+#chat-div{
+  height:100%;
 }

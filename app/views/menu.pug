@@ -1,22 +1,24 @@
 //-extends base.pug
-#menu-title(class="row")
+.row(style="height:10%")
+
+#menu-title(class="row",style="height:20%")
     .col-sm-3
-    .col-sm-6(class="outer-center")
+    .col-xs-6(class="outer-center")
         h1
-            | TITLE
+            | TRAIN DEATH MATCH
     .col-sm-3
-#menu-body(class="row")
+#menu-body(class="row",style="height:60%")
     .col-sm-1 
-    .col-sm-3(class="outer-center")
+    .col-xs-3#advert-div(class="outer-center")
         p
             |ADVERT
-    .col-sm-4(class="outer-center")
-        button(type="button", class="btn btn-success", id="play-button")
+    .col-xs-4(class="outer-center")
+        button#play-button(type="button", class="btn btn-success")
             | Play Game
-    .col-sm-3(class="outer-center")
+    .col-xs-3(class="outer-center")
         p 
             |USER INFO
     .col-sm-1
-#menu-footer(class="row")
+#menu-footer(class="row",style="height:10%")
     .span-6(class="outer-center") 
         | links and stuff

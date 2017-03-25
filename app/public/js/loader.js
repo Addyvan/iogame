@@ -17,7 +17,8 @@ window.onload = function () {
     'js/simple_protocols/setBrowser.js',
     'js/simple_protocols/getBrowser.js',
     'js/audioHandler.js',
-    'js/libraries/imgdye.min.js'
+    'js/libraries/imgdye.min.js',
+    'js/menu-controls.js'
   ]
   for (i = 0; i < scripts.length; i++) {
         // todo add error handling

@@ -13,5 +13,10 @@ html
         #menu-wrapper
             include menu.pug
 
-        #game-wrapper(style="visibility:hidden;")
-            block game.pug
+        //- what is the difference between visibility hidden and display none ? -andrew
+        #game-wrapper(style="display:none;")
+            include game.pug
+
+        #game-ui-wrapper(style="display:none;z-index:30;")
+            //-leaderboards, chat ect
+            include game-ui.pug
