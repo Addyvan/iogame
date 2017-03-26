@@ -18,6 +18,7 @@ function Projectile (args = {}) {
   this.player = args.player
   this.game = this.player.game
   this.dist = 0
+  this.collisionCheckCounter=0
 
   this.id = this.player.id + this.game.tick +this.x+this.y// unique bullet identifier todo find a more complicated way to get shorter IDs
 
@@ -48,17 +49,17 @@ Projectile.prototype.tick = function () {
     this.expire()
     return
   } else {
-    // check for collision
-    collided= this.game.map.detectCollisions(this.x,this.y,1,1) //todo h and w
+    // check for collision every 2 ticks  to save on computation
+    if( (this.collisionCheckCounter++)%2 ==0){
+      collided= this.game.map.detectCollisions(this.x,this.y,1,1) //todo h and w
 
-    if (collided!=undefined){
-      if(collided.player != this.player){
-        //you can't shoot yourself lol
-        collided.takeDamage(this.damage)
-        this.crash()
+      if (collided!=undefined){
+        if(collided.player != this.player){
+          //you can't shoot yourself lol
+          collided.takeDamage(this.damage,this.player)
+          this.crash()
+        }
       }
-      
-
     }
   }
 }

@@ -1,4 +1,5 @@
 const path = require('path')
+const _ = require('lodash')
 
 const gameMapFactory = require(path.resolve(__dirname, 'game-map.js'))
 const playerFactory = require(path.resolve(__dirname, 'player.js'))
@@ -11,18 +12,27 @@ function step () {
 
   // increment the game tick and set the timestamp
   this.tick = (this.tick + 1) % 100000
+  this.ticksLeft -= 1
+  if (this.ticksLeft <=0){
+    this.endGame()
+  }
 
   // 86400000 is # milliseconds in a day, apparently the timestamp was too big to fit in 4 bytes and that caused issues
   // TODO figure out if this is the best method, also apparently node has higher res timing?
   this.timestamp = Date.now() % 86400000
 
   if (this.tick % 100 === 1) console.log(`GAME TICK: ${this.tick}`)
+
+  if (this.tick % 60 ===0) this.updateLeaderboard()
 }
 
 function start () {
   // this function starts the game loop. there is no function to end it presently
   // http://stackoverflow.com/questions/10129363/javascript-class-this-method-called-with-setinterval
   // this behaves very strangely in js apparently
+  this.roundEndTime= Date.now() + this.ticksLeft*  1000 / 60
+
+
   const myobj = this
   setInterval(function () { myobj.step() }, 1000 / 60)
 }
@@ -71,13 +81,35 @@ function clearEvents () {
   this.events = {shots: [], crashes:[]}
 }
 
-function gameLoopFactory () {
+function updateLeaderboard(){
+  _.sortBy(this.players, [function(o) { return o.points; }]);
+
+  this.leaderboard= this.players.map((p) => [p.username, p.points])
+}
+
+function resetGame(){
+  //temporary function until lobbies are fully implemented
+  this.ticksLeft=60*600
+  this.roundEndTime= Date.now() + this.ticksLeft*  1000 / 60
+  this.projectiles=[]
+  this.players.forEach((player) => player.reset())
+}
+function endGame(){
+  //close out the game loop, log any stats that need logging and delete/clean up everything
+  console.log("round completed!")
+  this.resetGame()
+}
+
+function gameLoopFactory (args) {
   return {
     tick: 0,
     players: [],
     projectiles: [],
     events: {shots: [], crashes:[]},
     map: gameMapFactory(),
+    leaderboard:[],
+    roundEndTime:undefined,
+    ticksLeft:60*10, // 10 minutes
     step,
     start,
     addPlayer,
@@ -85,8 +117,11 @@ function gameLoopFactory () {
     addProjectile,
     removeProjectile,
     snapshot,
+    updateLeaderboard,
     getEvents,
-    clearEvents
+    clearEvents,
+    resetGame,
+    endGame
 
   }
 }

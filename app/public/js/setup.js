@@ -29,7 +29,7 @@ function setup () {
     // start audio and begin loading in sounds
   init_audio()
 
-    // connect to socket and set event handlers
+  // connect to socket and set event handlers
   connect_to_socket()
 
   console.log('setup complete!')
@@ -55,7 +55,8 @@ function stop_game () {
   // stops the game
 
 
-  //stop game ui loops (todo make game ui loops)
+  //stop game ui loops (such as the timer)
+  deactivate_ui()
 
 
   //stop the animation/game loop

@@ -40,7 +40,7 @@ function shoot () {
     args.dir = dir
     //console.log(dir)
     const test = new Projectile(args)
-    this.reload = 30
+    this.reload = 13 // make this a prime ( or at least odd number so that we can check the projectile's collisions in batches)
   }
 }
 

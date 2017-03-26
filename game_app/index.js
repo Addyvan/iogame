@@ -42,6 +42,9 @@ io.on('connection', function (socket) {
 
   socket.on('message', function(packet){ chatHandler.messageHandler(packet,socket.player.username)})
 
+
+  socket.on('username',function(username){ socket.emit("username-confirm", socket.player.validateUsername(username))})
+
   socket.emit('playerID', {id: socket.id})
 })
 
@@ -57,6 +60,12 @@ function broadcast () {
   io.in('game').emit('e', binaryEvents)
 }
 
+function broadcastLowFreq(){
+  // used to send stuff that doesn't need to be updated as often
+  io.in('game').emit('leaderboard', gameLoop.leaderboard.slice(0, 10))
+  io.in('game').emit('round-info', {roundEndTime:gameLoop.roundEndTime} ) //TODO not send this every second
+}
+
 io.listen(config.port)
 console.log('listening on port ' + config.port)
 
@@ -66,3 +75,4 @@ gameLoop.map.load('map.json')
 gameLoop.start()
 
 setInterval(broadcast, 1000 / 20)
+setInterval(broadcastLowFreq, 1000 )

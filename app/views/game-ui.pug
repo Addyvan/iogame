@@ -2,20 +2,14 @@
 //- the top left should have a leaderboard , bottom right a chat?
 
 .row( style="height: 25%;")
-    #leaderboard-div( class="col-xs-2 col-xs-offset-10")
+    #timer-div(class="col-xs-2 col-xs-offset-5 unselectable")
+        h2#round-time
+            | 10:00
+    #leaderboard-div( class="col-xs-2 col-xs-offset-3 unselectable")
         h3
             | Leaderboard
-        ol
-            li
-                |test name 1 
-            li
-                |test name 2 
-            li
-                |test name 3 
-            li
-                |test name 4 
-            li
-                |test name 5
+        table
+            tbody#leaderboard-t-body
 
 //- this row is just to make things line up
 .row( style = "height:45%; width:100%")

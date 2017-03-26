@@ -167,7 +167,8 @@ function detectCollisions (x, y, w, h) {
 
 function checkCollision(collidable,x,y,w,h){
   // todo atm assume width and height of cars is 1 and the object is a point mass
-  if(collidable.x < x && x <collidable.x+1 && collidable.y < y&& y <collidable.y+1){
+  // the cars are kind of tall so I made the hit boxes a bit taller ( i think I got the directions right?)
+  if(collidable.x-0.5 < x && x <collidable.x+0.5 && collidable.y-1 < y&& y <collidable.y+0.5){
     //console.log(collidable.x,x,collidable.y,y)
     return true
   }

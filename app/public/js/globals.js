@@ -30,6 +30,9 @@ INPUT_ORDER = [
   'right',
   'click'
 ]
+// round info
+ROUND_END=undefined
 
 // client info
 PLAYER_ID = undefined
+USERNAME=undefined

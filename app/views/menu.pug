@@ -2,29 +2,30 @@
 .row(style="height:10%")
 
 #menu-title(class="row",style="height:20%")
-    .col-sm-3
-    .col-xs-6(class="outer-center")
+    .col-xs-6(class="outer-center col-xs-offset-3")
         h1
             | TRAIN DEATH MATCH
-    .col-sm-3
 #menu-body(class="row",style="height:60%")
-    .col-sm-1 
-    .col-xs-3#advert-div(class="outer-center")
+    .col-xs-3#advert-div(class="outer-center col-xs-offset-1")
         p
             |ADVERT
     .col-xs-4(class="outer-center")
-        form#usernameSelect
-            input#username(type="text", placeholder="Username")
-        button#play-button(type="button", class="btn btn-success",style="margin-left:5;")
-            | Play Game
-
-        #instructions
-            p
-                | Use WASD or the arrow keys (jk not yet) to control your train. mouse to shoot.
+        .row
+            .col-8(style="height:30px;")
+                form#usernameSelect(onsubmit="return false")
+                    input#username(type="text", placeholder="Username")
+            .col-4(style="height:40px;")
+                button#play-button(type="button", class="btn btn-success",style="margin-left:5;")
+                    | Play Game
+        .row
+            | SERVER LIST TODO
+        .row    
+            #instructions
+                p
+                    | Use WASD or the arrow keys (jk not yet) to control your train. mouse to shoot.
     .col-xs-3(class="outer-center")
         p 
             |USER INFO
-    .col-sm-1
 #menu-footer(class="row",style="height:10%")
     .span-6(class="outer-center") 
         | links and stuff

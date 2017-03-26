@@ -74,9 +74,13 @@ function parse (inputs) {
   this.mouse.y = inputs.mouse.y / 100
 }
 
-function RIP () {
+function RIP (source) {
     // RIP in peace
     // TODO
+
+    //give the killer a point
+    if(source) source.points++
+      
 
     // remove all cars
     console.log("player has died! :((((")
@@ -91,7 +95,18 @@ function RIP () {
     this.spawn()
 
 }
+function validateUsername(username){
+  //todo
+  this.username=username.substring(0,12)
+  console.log("validating username for:", this.username)
+  return this.username
+}
 
+function reset(){
+  // function to reset a player between rounds
+  this.points=0
+  this.RIP(false)
+}
 function playerFactory (id, game, username) {
   return {
     id,
@@ -110,11 +125,14 @@ function playerFactory (id, game, username) {
     },
     dead: 1,
     cars: [],
+    points:0,
     tick,
+    validateUsername,
     snapshot,
     spawn,
     parse,
-    RIP
+    RIP,
+    reset
   }
 }
 

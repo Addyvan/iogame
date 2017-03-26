@@ -24,9 +24,6 @@
     height:80%;
 }
 
-#menu-body div{
-    height:100%;
-}
 
 /*
 #menu div{
@@ -94,4 +91,22 @@ body{
   position:absolute;
   margin-bottom: 0;
   width:98%;
+}
+
+#leaderboard-t-body td{
+  padding-right:3px;
+}
+
+/*http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable*/
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#round-time{
+  margin-top: 5px;
 }

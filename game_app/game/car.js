@@ -122,19 +122,19 @@ function attach (target) {
   this.player.game.map.addCollidable(this) //todo put thsi is a better spot
 }
 
-function takeDamage(damage){
+function takeDamage(damage,source){
   this.hp -= damage
   if(this.hp<=0){
     this.hp=0
-    this.die()
+    this.die(source)
   }
 }
 
-function die(){
+function die(source){
   // the car is dead
   // todo
   console.log("I died :(((((")
-  this.player.RIP() //todo atm one car dieing kills the player
+  this.player.RIP(source) //todo atm one car dieing kills the player
 }
 
 function carFactory () {

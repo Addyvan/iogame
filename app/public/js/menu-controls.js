@@ -6,10 +6,14 @@ var show_game = function(){
     if(game_displaying) return;
     //googletag.pubads().refresh();
 
+    if(USERNAME!= $("#username").val()){
+        send_username($("#username").val()) // in networking.js
+    }
+
     $("#game-wrapper").css({ "display": ""});
     $("#game-ui-wrapper").css({ "display": ""});
     $("#menu-wrapper").css({ "display": "none"});
-    
+
 
     // start the game, this will also start listening to keys for the game
     start_game() // this function is in setup.js
@@ -35,4 +39,11 @@ var hide_game = function(){
 bind_actions= function(){
     //function to bind all the menu functions to their appropriate events this is a seperate function in case we need something to load first
     $("#play-button").bind("click",show_game);
+    $("#usernameSelect").bind("submit",show_game);
+}
+
+set_username=function(username){
+    // this is called by the socket handler
+    USERNAME= username
+    console.log("your username is ", USERNAME, "!")
 }
