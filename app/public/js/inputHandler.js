@@ -104,9 +104,16 @@ InputHandlerClass = Class.extend({
         // todo: just do it this way to begin...
     inputs = {actions:[], 
             mouse:{x:undefined,y:undefined}};
-
+      
     for (var i = 0; i < INPUT_ORDER.length; i++) {
-      inputs.actions.push(inputHandler.actions[INPUT_ORDER[i]])
+      if(TEXT_MODE){//TEXT_MODE is controlled in the ui-controls.js file
+        // send false for all since the player is typing a message
+        inputs.actions.push(0)
+      }
+      else{
+        inputs.actions.push(inputHandler.actions[INPUT_ORDER[i]])
+      }
+      
     }
     // do the mouse coord here to avoid issues with scrolling camera and stationary mouse
     game_coords= screen_coords_to_game(inputHandler.mouse.x,inputHandler.mouse.y);

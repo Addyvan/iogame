@@ -63,5 +63,35 @@ body{
 }
 
 #chat-div{
-  height:100%;
+  height:100%;  
+}
+.chat-user{
+  width:30%;
+}
+.chat-message{
+  width:70%;
+}
+#chat-div table{
+  table-layout: fixed;
+  word-break:break-all;
+  word-wrap: break-word;
+}
+
+#chat-div h3{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#chat-div table tbody{
+  position:fixed;
+  height:20%;
+  width:30%;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+#chat-div form{
+  position:absolute;
+  margin-bottom: 0;
+  width:98%;
 }

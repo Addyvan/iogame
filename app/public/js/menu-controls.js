@@ -9,7 +9,7 @@ var show_game = function(){
     $("#game-wrapper").css({ "display": ""});
     $("#game-ui-wrapper").css({ "display": ""});
     $("#menu-wrapper").css({ "display": "none"});
-
+    
 
     // start the game, this will also start listening to keys for the game
     start_game() // this function is in setup.js

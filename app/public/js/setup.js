@@ -44,6 +44,7 @@ function start_game () {
     game_init()
   }
   if (!requestAnimId) { // defined right before game_loop in game.js
+    activate_ui()
     inputHandler.activate(true)
     game_loop()
   }
@@ -69,17 +70,4 @@ function stop_game () {
   // empty the snap buffer
   window.SNAP_BUFFER=[];
 };
-
-connect_to_socket = function (type = 'player') {
-  window.socket = io.connect('http://localhost:' + GAME_PORT, {query: 'type=' + type})
-  socket.on('playerID', function (data) {
-    PLAYER_ID = data.id
-  })
-
-    // on snapshot
-  socket.on('s', parse_snapshot)
-
-  //on events
-  socket.on('e', parse_events)
-}
 

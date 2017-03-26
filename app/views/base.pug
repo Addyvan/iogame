@@ -14,9 +14,11 @@ html
             include menu.pug
 
         //- what is the difference between visibility hidden and display none ? -andrew
-        #game-wrapper(style="display:none;")
-            include game.pug
+        #game-wrapper(style="display:none;z-index:0;")
+                    include game.pug
 
-        #game-ui-wrapper(style="display:none;z-index:30;")
+        #game-ui-wrapper(style="display:none;z-index:30;position: relative;")
+            //- position relative is required to make the chat input clickable
+            //- http://stackoverflow.com/questions/7245896/link-using-z-index-cant-be-clicked-even-though-its-on-top-in-both-firefox-i
             //-leaderboards, chat ect
             include game-ui.pug

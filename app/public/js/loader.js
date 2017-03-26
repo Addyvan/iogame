@@ -14,11 +14,13 @@ window.onload = function () {
     'js/utils.js',
     'js/3dsprite.js',
     'js/inputHandler.js',
+    'js/networking.js',
     'js/simple_protocols/setBrowser.js',
     'js/simple_protocols/getBrowser.js',
     'js/audioHandler.js',
     'js/libraries/imgdye.min.js',
-    'js/menu-controls.js'
+    'js/menu-controls.js',
+    'js/ui-controls.js'
   ]
   for (i = 0; i < scripts.length; i++) {
         // todo add error handling

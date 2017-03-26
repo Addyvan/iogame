@@ -26,5 +26,9 @@
     #chat-div(class="col-xs-4 col-xs-offset-8")
         h3
             | Chat
-        p
-            |messages will go here
+        table
+            tbody#messages-t-body
+
+        form#message-form(style="bottom:0;",onsubmit="return false")
+            //- onsubmit return true will reload the page so we need to turn it off
+            input#message(type="text",autocomplete='off',style="width:100%",placeholder="Send message...",  maxlength="200" )

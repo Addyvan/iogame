@@ -2,6 +2,7 @@ const path = require('path')
 
 const config = require(path.resolve(__dirname, 'config.json'))
 const gameLoopFactory = require(path.resolve(__dirname, 'game/game-loop.js'))
+const chatHandlerFactory = require(path.resolve(__dirname, 'game/chat.js'))
 
 // Import serializer get and set
 // https://github.com/ThreeLetters/SimpleProtocols
@@ -39,6 +40,8 @@ io.on('connection', function (socket) {
     gameLoop.removePlayer(socket.id, socket.handshake.query)
   })
 
+  socket.on('message', function(packet){ chatHandler.messageHandler(packet,socket.player.username)})
+
   socket.emit('playerID', {id: socket.id})
 })
 
@@ -58,6 +61,7 @@ io.listen(config.port)
 console.log('listening on port ' + config.port)
 
 const gameLoop = gameLoopFactory()
+const chatHandler= chatHandlerFactory({io:io})
 gameLoop.map.load('map.json')
 gameLoop.start()
 

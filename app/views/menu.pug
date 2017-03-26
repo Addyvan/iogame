@@ -13,8 +13,14 @@
         p
             |ADVERT
     .col-xs-4(class="outer-center")
-        button#play-button(type="button", class="btn btn-success")
+        form#usernameSelect
+            input#username(type="text", placeholder="Username")
+        button#play-button(type="button", class="btn btn-success",style="margin-left:5;")
             | Play Game
+
+        #instructions
+            p
+                | Use WASD or the arrow keys (jk not yet) to control your train. mouse to shoot.
     .col-xs-3(class="outer-center")
         p 
             |USER INFO
