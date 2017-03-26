@@ -47,7 +47,7 @@ function spawnLocation (player, team = 0) {
 
   player.heading = Number(spawn.properties.heading)
   player.last_heading = Number(spawn.properties.heading) // is this still used?
-  console.log("spawning at:", player.x,player.y,player.heading)
+  console.log("spawning at ",spawn.name, " :", player.x,player.y,player.heading)
 }
 
 function addCollidable (collidable){

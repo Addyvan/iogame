@@ -20,7 +20,7 @@ function setup () {
 
     // load/initialize the map and sprites
   window.gMap = new TILEDMapClass()
-  gMap.load('/assets/map.json')
+  gMap.load('/assets/maps/ffa001.json') // todo make the map laod based on the server
   load_ugly_sprite()
 
   // connect buttons to menu ui functionality
@@ -29,8 +29,7 @@ function setup () {
     // start audio and begin loading in sounds
   init_audio()
 
-  // connect to socket and set event handlers
-  connect_to_socket()
+  
 
   console.log('setup complete!')
 
@@ -42,6 +41,8 @@ function start_game () {
     // starts the game
   if (!GAME_INITIALIZED) {
     game_init()
+    // connect to socket and set event handlers
+    connect_to_socket()
   }
   if (!requestAnimId) { // defined right before game_loop in game.js
     activate_ui()

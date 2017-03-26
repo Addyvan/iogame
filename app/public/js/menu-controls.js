@@ -6,6 +6,8 @@ var show_game = function(){
     if(game_displaying) return;
     //googletag.pubads().refresh();
 
+    start_game() // this function is in setup.js
+    
     if(USERNAME!= $("#username").val()){
         send_username($("#username").val()) // in networking.js
     }
@@ -16,7 +18,7 @@ var show_game = function(){
 
 
     // start the game, this will also start listening to keys for the game
-    start_game() // this function is in setup.js
+    
 
     game_displaying=true;
 

@@ -18,7 +18,14 @@
                 button#play-button(type="button", class="btn btn-success",style="margin-left:5;")
                     | Play Game
         .row
-            | SERVER LIST TODO
+            .col-3(style="height:30px;")
+                | Server:
+            .col-9(style="height:30px;")
+                form#server-form
+                    select#server-select(name="server-list" form="server-form")
+                        each server in serverList
+                            option(value=server.ip+":" +server.port )
+                                | #{server.name}
         .row    
             #instructions
                 p

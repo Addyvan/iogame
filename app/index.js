@@ -13,10 +13,12 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.set('view engine', 'pug')
 app.engine('pug', require('pug').__express)
 
+serverList=require(path.resolve(__dirname, 'public/server-list'))
+
 // tell express what page to render when people go to our base page
 app.get('/', function (req, res) {
   //res.render('base')
-  res.render('base')
+  res.render('base', { serverList :serverList  })
 })
 
 // Handle 404 - Keep this as a last route

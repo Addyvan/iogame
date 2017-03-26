@@ -103,8 +103,11 @@ var TILEDMapClass = Class.extend({
     var map = this.currMapData
     this.numXTiles = map.width
     this.numYTiles = map.height
+    MAP_WIDTH=this.numXTiles
+    MAP_HEIGHT=this.numYTiles
     this.tileSize.x = map.tilewidth
     this.tileSize.y = map.tileheight
+
     this.pixelSize.x = this.numXTiles * this.tileSize.x
     this.pixelSize.y = this.numYTiles * this.tileSize.y
 

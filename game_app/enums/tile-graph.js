@@ -15,10 +15,20 @@ module.exports = {
   1129: [0, [1, 1, 0], [0, 0, 1], [0, 1, 0]], // horizontal with corner N-W
   1128: [0, [0, 1, 0], [1, 0, 0], [0, 1, 1]], // horizontal with corner N-e
 
+  1074: [[1, 0, 0], [0, 1, 1], 0, [0, 1, 0]], // horizontal with corner S-W
+  1073: [[0, 0, 1], [0, 1, 0], 0, [1, 1, 0]], // horizontal with corner S-e
+  1131: [0, [1, 1, 0], [0, 0, 1], [0, 1, 0]], // horizontal with corner N-W
+  1130: [0, [0, 1, 0], [1, 0, 0], [0, 1, 1]], // horizontal with corner N-e
+
   1186: [[1, 1, 0], [0, 0, 1], [0, 1, 0], 0], // vertical with corner S-W
   1185: [[0, 1, 1], 0, [0, 1, 0], [1, 0, 0]], // vertical with corner S-e
   1243: [[0, 1, 0], [1, 0, 0], [0, 1, 1], 0], // vertical with corner N-W
   1242: [[0, 1, 0], 0, [1, 1, 0], [0, 0, 1]], // vertical with corner N-e
+
+  1188: [[1, 1, 0], [0, 0, 1], [0, 1, 0], 0], // vertical with corner S-W
+  1187: [[0, 1, 1], 0, [0, 1, 0], [1, 0, 0]], // vertical with corner S-e
+  1245: [[0, 1, 0], [1, 0, 0], [0, 1, 1], 0], // vertical with corner N-W
+  1244: [[0, 1, 0], 0, [1, 1, 0], [0, 0, 1]], // vertical with corner N-e
 
   1299: [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0]] // crossroads
 }

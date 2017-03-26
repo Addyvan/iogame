@@ -4,7 +4,9 @@
 */
 
 connect_to_socket = function (type = 'player') {
-  window.socket = io.connect('http://localhost:' + GAME_PORT, {query: 'type=' + type})
+  host= $("#server-select").val()
+  console.log("connecting to host ", host)
+  window.socket = io.connect('http://' +host, {query: 'type=' + type})
   socket.on('playerID', function (data) {
     PLAYER_ID = data.id
   })

@@ -71,7 +71,7 @@ console.log('listening on port ' + config.port)
 
 const gameLoop = gameLoopFactory()
 const chatHandler= chatHandlerFactory({io:io})
-gameLoop.map.load('map.json')
+gameLoop.map.load('ffa001.json') // todo put this inside gameloop
 gameLoop.start()
 
 setInterval(broadcast, 1000 / 20)

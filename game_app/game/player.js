@@ -68,6 +68,8 @@ function parse (inputs) {
   this.actions.down = inputs.actions[1]
   this.actions.left = inputs.actions[2]
   this.actions.right = inputs.actions[3]
+  //todo this is ugly lol
+  this.desiredHeading= [inputs.actions[0],inputs.actions[3],inputs.actions[1], inputs.actions[2]].indexOf(1)
   this.actions.clicking = inputs.actions[4]
 
   this.mouse.x = inputs.mouse.x / 100
@@ -126,6 +128,7 @@ function playerFactory (id, game, username) {
     dead: 1,
     cars: [],
     points:0,
+    desiredHeading:-1,
     tick,
     validateUsername,
     snapshot,

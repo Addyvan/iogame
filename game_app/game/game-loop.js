@@ -82,7 +82,7 @@ function clearEvents () {
 }
 
 function updateLeaderboard(){
-  _.sortBy(this.players, [function(o) { return o.points; }]);
+  _.sortBy(this.players, [function(o) { return -o.points; }]);
 
   this.leaderboard= this.players.map((p) => [p.username, p.points])
 }
@@ -109,7 +109,7 @@ function gameLoopFactory (args) {
     map: gameMapFactory(),
     leaderboard:[],
     roundEndTime:undefined,
-    ticksLeft:60*10, // 10 minutes
+    ticksLeft:60*600, // 10 minutes
     step,
     start,
     addPlayer,

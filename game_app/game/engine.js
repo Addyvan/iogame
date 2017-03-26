@@ -12,6 +12,8 @@ const carFactory = require(path.resolve(__dirname, 'car.js'))
 function tick () {
   // todo make the inputs condtion on heading
   //console.log(this.player.actions)
+  /*
+  //this is the legacy controls
   if (this.player.actions.up) { // up
     this.accelerating = 1
   } else if (this.player.actions.down) { // down
@@ -19,8 +21,31 @@ function tick () {
   } else {
     this.accelerating = 0
   }
+  */
+  if (this.player.desiredHeading== -1){
+    this.accelerating=0
+  }
+  else if(this.player.desiredHeading == this.heading){
+    console.log("accelerating")
+    this.accelerating = 1
+  }else if (this.player.desiredHeading == (this.heading+2)%4) { 
+    this.accelerating = -1
+  }else{
+    this.accelerating=0
+  }
 
-  this.speed += this.accel_rate * this.accelerating
+  if (this.accelerating!=0){
+    this.speed += this.accel_rate * this.accelerating
+  }
+  else if (this.speed!=0){
+    //slow the trains down overtime
+    //todo figure out how to set these values lol
+
+    this.speed -= Math.abs(this.speed)/this.speed * this.accel_rate/20
+    if(this.speed< this.accel_rate/20 && this.speed>-this.accel_rate/20){
+      this.speed =0
+    }
+  }
   if (Math.abs(this.speed) > 10 / 60) {
     // todo implement max speed system
     // todo figure out if we even need to worry about speeds over 59 tiles per second lol
@@ -39,7 +64,7 @@ function getTurn () {
   // the engine is the front train so it beahves differently a little
   // todo make sure that this isn't dirrectly edited by user inputs mid  loop
 
-  if (this.speed < 0) {
+  if (this.speed < 0) { // GOING BACKAWARDS
     // follow the car attached to the back of this car
     if (this.attached_back === undefined) {
       return 1
@@ -54,11 +79,28 @@ function getTurn () {
     }
   }
 
+  //GOING FORWARDS
+  /*
+  //legacy controls
+  //try to go towards the heading the player is pressing
   if (this.player.actions.left) { // left
     this.turning = 0
   } else if (this.player.actions.right) { // right
     this.turning = 2
   } else {
+    this.turning = 1
+  }
+  */
+
+  if (this.desiredHeading== -1){
+    this.turning = 1
+  }
+  else if(this.player.desiredHeading== (this.heading+1)%4){//left
+    this.turning = 2
+  }
+  else if(this.player.desiredHeading== (this.heading+3)%4){//right
+    this.turning = 0
+  }else{
     this.turning = 1
   }
   return this.turning

@@ -53,6 +53,13 @@ draw_ugly_trains = function (ctx, snapshot) {
         if(snapshot.players[i].cars[j].damaged){car_img = dmg_ugly_gun_img}
       }
       draw_3d(ctx, car_img, car_px, car_py, snapshot.players[i].cars[j].angle)
+      
+    }
+    for (var j = 0, len_j = snapshot.players[i].cars.length; j < len_j; j++) {
+      //draw the health bars after so that they don't get covered
+      car_game_coords = game_coords_to_screen(snapshot.players[i].cars[j].x, snapshot.players[i].cars[j].y)
+      car_px = car_game_coords[0]
+      car_py = car_game_coords[1]
       draw_health_bar(ctx,snapshot.players[i].cars[j].hp, car_px, car_py)
     }
   }
