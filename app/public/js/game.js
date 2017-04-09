@@ -52,7 +52,7 @@ game_loop = function () {
     // and it syncs with screen paint actions so that the scene is rendered halfway through our updates
   GAME_LOOP_COUNTER = (GAME_LOOP_COUNTER + 1) % 10000
   requestAnimId = window.requestAnimationFrame(game_loop)
-  client_time = (new Date() - LERP) % 86400000 // does it matter if this is called before or after requestAnimationFrame?
+  client_time = (new Date() - LERP + SERVER_TIME_AHEAD) % 86400000 // does it matter if this is called before or after requestAnimationFrame?
 
   if (SNAP_BUFFER.length == 0) {
     console.log('buffer empty, waiting for first snapshot')

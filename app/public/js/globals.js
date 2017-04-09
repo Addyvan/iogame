@@ -10,6 +10,8 @@ ANGLE = 0// temporary
 GAME_PORT = 3000
 BUFFER_LENGTH = 10 // 10*50ms = 0.5 seconds
 LERP = 100 // render delay in ms
+SERVER_TIME_AHEAD=0 // this is adjusted later
+
 
 // declarations
 var inputHandler

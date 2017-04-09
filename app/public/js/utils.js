@@ -43,3 +43,7 @@ function screen_coords_to_game (x, y) {
 function weighted_average (a, b, weight_a, weight_b) {
   return weight_a * a + weight_b * b
 }
+
+function add(a, b) {
+    return a + b;
+}

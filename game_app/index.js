@@ -45,6 +45,11 @@ io.on('connection', function (socket) {
 
   socket.on('username',function(username){ socket.emit("username-confirm", socket.player.validateUsername(username))})
 
+  // ntp clock syncing uses this, simply send back the current time
+  socket.on('NTP', function(){
+    time= Date.now();
+    socket.emit('NTP', time); } )
+
   socket.emit('playerID', {id: socket.id})
 })
 
