@@ -20,3 +20,7 @@ player input is transmited in a list
 -data econding protocol
 
 x and y are multiplied by 100 and turned to ints 
+
+
+Made the repository public since this isn't serious 
+
